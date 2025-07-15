@@ -56,6 +56,18 @@ function setupDebtTracker(sharedData) {
         const monthlyInterestRate = (debt.rate / 100) / 12;
         const dailyInterest = (debt.principal * (debt.rate / 100)) / 365;
 
+        if (monthlyInterestRate === 0) {
+            const paymentsLeft = Math.ceil(debt.principal / debt.payment);
+            const payoffDate = new Date();
+            payoffDate.setMonth(payoffDate.getMonth() + paymentsLeft);
+            return {
+                dailyCarryingCost: dailyInterest.toFixed(2),
+                paymentsLeft: paymentsLeft,
+                payoffDate: payoffDate.toLocaleDateString(),
+                yearlyInterest: (dailyInterest * 365).toFixed(2)
+            };
+        }
+
         if (debt.payment <= debt.principal * monthlyInterestRate) {
             return {
                 dailyCarryingCost: dailyInterest.toFixed(2),
