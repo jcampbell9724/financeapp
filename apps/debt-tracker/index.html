@@ -1,0 +1,22 @@
+<div class="debt-tracker-header">
+    <h2>Debt Tracker</h2>
+    <button id="toggle-add-form-btn" class="toggle-add-form-btn">+ Add New Account</button>
+</div>
+
+<div id="add-debt-form-container" class="add-debt-form-container" style="display: none;">
+    <form id="debt-form" class="debt-form">
+        <div class="form-grid">
+            <input type="text" id="debt-name" placeholder="Account Name (e.g., Car Loan)" required>
+            <input type="number" id="debt-principal" placeholder="Current Principal ($")" required step="0.01">
+            <input type="number" id="debt-payment" placeholder="Monthly Payment ($")" required step="0.01">
+            <input type="number" id="debt-rate" placeholder="Interest Rate (%)" required step="0.01">
+        </div>
+        <button type="submit">Add Account</button>
+    </form>
+</div>
+
+<hr class="debt-divider">
+
+<div id="debt-accounts-container" class="debt-accounts-container scrollable">
+    <!-- Debt accounts will be dynamically added here -->
+</div>
