@@ -111,7 +111,10 @@ function setupDebtTracker(sharedData) {
             accountCard.innerHTML = `
                 <div class="debt-account__header">
                     <h3>${debt.name}</h3>
-                    <button class="delete-debt-btn">×</button>
+                    <div class="debt-account__header-actions">
+                        <button class="edit-debt-btn">Edit</button>
+                        <button class="delete-debt-btn">×</button>
+                    </div>
                 </div>
                 <p><strong>Principal:</strong> $${debt.principal.toFixed(2)}</p>
                 <div class="debt-account__metrics">
@@ -123,6 +126,14 @@ function setupDebtTracker(sharedData) {
                 <div class="debt-account__footer">
                     Last updated: ${new Date(debt.lastUpdated).toLocaleDateString()}
                 </div>
+                <form class="debt-account__edit-form" style="display:none">
+                    <input type="text" class="edit-debt-name" value="${debt.name}" required>
+                    <input type="number" class="edit-debt-principal" value="${debt.principal}" step="0.01" required>
+                    <input type="number" class="edit-debt-payment" value="${debt.payment}" step="0.01" required>
+                    <input type="number" class="edit-debt-rate" value="${debt.rate}" step="0.01" required>
+                    <button type="submit" class="save-debt-btn">Save</button>
+                    <button type="button" class="cancel-edit-btn">Cancel</button>
+                </form>
                 <div class="debt-account__history">
                     <h4>Update History</h4>
                     <ul class="debt-account__history-list">
@@ -144,16 +155,35 @@ function setupDebtTracker(sharedData) {
             const card = e.target.closest('.debt-account');
             if (!card) return;
 
+            const debtId = parseInt(card.dataset.id, 10);
+
             // Handle delete button clicks
             if (e.target.classList.contains('delete-debt-btn')) {
-                e.stopPropagation(); // Prevent the card's main click event
-                const debtId = parseInt(card.dataset.id, 10);
+                e.stopPropagation();
                 if (confirm('Are you sure you want to delete this account?')) {
                     debts = debts.filter(d => d.id !== debtId);
                     saveDebts(debts);
                     renderDebtAccounts();
                 }
-                return; // Stop further processing
+                return;
+            }
+
+            // Toggle edit form
+            if (e.target.classList.contains('edit-debt-btn')) {
+                e.stopPropagation();
+                const form = card.querySelector('.debt-account__edit-form');
+                if (form) {
+                    form.style.display = form.style.display === 'block' ? 'none' : 'block';
+                }
+                return;
+            }
+
+            // Cancel edit
+            if (e.target.classList.contains('cancel-edit-btn')) {
+                e.preventDefault();
+                const form = card.querySelector('.debt-account__edit-form');
+                if (form) form.style.display = 'none';
+                return;
             }
 
             // Handle toggling the history view for the whole card
@@ -161,6 +191,27 @@ function setupDebtTracker(sharedData) {
             if (historyView) {
                 const isVisible = historyView.style.display === 'block';
                 historyView.style.display = isVisible ? 'none' : 'block';
+            }
+        });
+
+        // Handle save on edit form submission
+        debtAccountsContainer.addEventListener('submit', (e) => {
+            if (e.target.classList.contains('debt-account__edit-form')) {
+                e.preventDefault();
+                const card = e.target.closest('.debt-account');
+                const debtId = parseInt(card.dataset.id, 10);
+                const debt = debts.find(d => d.id === debtId);
+                if (!debt) return;
+                const now = new Date().toISOString();
+                const newPrincipal = parseFloat(e.target.querySelector('.edit-debt-principal').value);
+                debt.name = e.target.querySelector('.edit-debt-name').value;
+                debt.principal = newPrincipal;
+                debt.payment = parseFloat(e.target.querySelector('.edit-debt-payment').value);
+                debt.rate = parseFloat(e.target.querySelector('.edit-debt-rate').value);
+                debt.lastUpdated = now;
+                debt.history.push({ date: now, principal: newPrincipal, event: 'Account Updated' });
+                saveDebts(debts);
+                renderDebtAccounts();
             }
         });
     }
