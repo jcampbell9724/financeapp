@@ -1,0 +1,46 @@
+/* Asset Entry Styles */
+.asset-form {
+    margin-bottom: 20px;
+    font-family: "Courier New", monospace;
+}
+
+.asset-form input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #000;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.asset-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    border: 2px solid #000;
+    cursor: pointer;
+}
+
+.asset-form button:hover {
+    background-color: #f0f0f0;
+}
+
+.asset-divider {
+    border: none;
+    border-top: 2px solid #000;
+    margin: 20px 0;
+}
+
+.asset-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #000;
+    margin-bottom: 10px;
+    background: #fff;
+}
+
+.asset-list {
+    max-height: 400px;
+    overflow-y: auto;
+}

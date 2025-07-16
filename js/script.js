@@ -14,6 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
             path: 'apps/debt-tracker/',
             setupFunction: 'setupDebtTracker'
         },
+        {
+            id: 'asset-entry',
+            title: 'Asset Entry',
+            icon: '&#128200;',
+            path: 'apps/asset-entry/',
+            setupFunction: 'setupAssetEntry'
+        },
         // {
         //     id: 'app2',
         //     title: 'App Two',
