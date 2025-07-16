@@ -1,0 +1,54 @@
+/* Expense Tracker Styles */
+.expense-header {
+    margin-bottom: 20px;
+}
+
+.expense-form {
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.expense-form input,
+.expense-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--surface-color);
+    box-sizing: border-box;
+}
+
+.expense-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--highlight-color);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.expense-form button:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background: var(--surface-color);
+}
+
+.expense-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
