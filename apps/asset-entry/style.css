@@ -1,7 +1,7 @@
 /* Asset Entry Styles */
 .asset-form {
     margin-bottom: 20px;
-    font-family: "Courier New", monospace;
+    font-family: Arial, sans-serif;
 }
 
 .form-grid {
@@ -14,7 +14,7 @@
 .asset-form input {
     width: 100%;
     padding: 10px;
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-color);
     background: var(--surface-color);
     box-sizing: border-box;
 }
@@ -22,7 +22,7 @@
 .asset-form select {
     width: 100%;
     padding: 10px;
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-color);
     background: var(--surface-color);
     box-sizing: border-box;
 }
@@ -31,9 +31,10 @@
     width: 100%;
     padding: 10px;
     background-color: var(--highlight-color);
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-color);
     cursor: pointer;
     transition: background-color 0.2s;
+    border-radius: 4px;
 }
 
 .asset-form button:hover {
@@ -43,7 +44,7 @@
 
 .asset-divider {
     border: none;
-    border-top: 2px solid #000;
+    border-top: 2px solid var(--border-color);
     margin: 20px 0;
 }
 
@@ -52,9 +53,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-color);
     margin-bottom: 10px;
     background: var(--surface-color);
+    border-radius: 4px;
 }
 
 .asset-item__header {
@@ -67,8 +69,9 @@
 .asset-item__header-actions button {
     margin-left: 5px;
     background: none;
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-color);
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .asset-item__edit-form {
@@ -82,12 +85,14 @@
 .asset-item__edit-form select,
 .asset-item__edit-form button {
     padding: 8px;
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-color);
     background: var(--surface-color);
+    border-radius: 4px;
 }
 
 .asset-item__edit-form button {
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .asset-history {
