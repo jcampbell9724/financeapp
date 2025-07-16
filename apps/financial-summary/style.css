@@ -1,0 +1,13 @@
+.summary-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.summary-metric {
+    padding: 10px;
+    border: 2px solid #000;
+    background: #fff;
+    text-align: center;
+}
