@@ -157,11 +157,11 @@ function setupDebtTracker(sharedData) {
 
             const debtId = parseInt(card.dataset.id, 10);
 
+
             // Ignore clicks inside the inline edit form so the history doesn't toggle
             if (e.target.closest('.debt-account__edit-form')) {
                 return;
-            }
-
+         
             // Handle delete button clicks
             if (e.target.classList.contains('delete-debt-btn')) {
                 e.stopPropagation();
@@ -187,6 +187,7 @@ function setupDebtTracker(sharedData) {
             if (e.target.classList.contains('cancel-edit-btn')) {
                 e.preventDefault();
                 const form = card.querySelector('.debt-account__edit-form');
+
                 if (form) {
                     const debt = debts.find(d => d.id === debtId);
                     if (debt) {
@@ -197,6 +198,7 @@ function setupDebtTracker(sharedData) {
                     }
                     form.style.display = 'none';
                 }
+
                 return;
             }
 
