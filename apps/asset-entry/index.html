@@ -1,0 +1,17 @@
+<div class="asset-entry-header">
+    <h2>Asset Entry</h2>
+</div>
+
+<form id="asset-form" class="asset-form">
+    <div class="form-grid">
+        <input type="text" id="asset-name" placeholder="Asset Name (e.g., Stocks)" required>
+        <input type="number" id="asset-value" placeholder="Current Value ($)" step="0.01" required>
+    </div>
+    <button type="submit">Add Asset</button>
+</form>
+
+<hr class="asset-divider">
+
+<div id="asset-list" class="asset-list scrollable">
+    <!-- Assets will be dynamically added here -->
+</div>
