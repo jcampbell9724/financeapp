@@ -161,7 +161,9 @@ function setupDebtTracker(sharedData) {
             // Ignore clicks inside the inline edit form so the history doesn't toggle
             if (e.target.closest('.debt-account__edit-form')) {
                 return;
-         
+            }
+
+
             // Handle delete button clicks
             if (e.target.classList.contains('delete-debt-btn')) {
                 e.stopPropagation();
