@@ -21,6 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
             path: 'apps/asset-entry/',
             setupFunction: 'setupAssetEntry'
         },
+        {
+            id: 'financial-summary',
+            title: 'Financial Summary',
+            icon: '&#128201;',
+            path: 'apps/financial-summary/',
+            setupFunction: 'setupFinancialSummary'
+        },
         // {
         //     id: 'app2',
         //     title: 'App Two',
