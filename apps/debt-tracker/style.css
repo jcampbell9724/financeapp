@@ -1,4 +1,23 @@
 /* Debt Tracker Styles */
+.debt-tracker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #000;
+    background-color: #fffbde;
+}
+
+.toggle-add-form-btn {
+    background: #fffbde;
+    border: 2px solid #000;
+    cursor: pointer;
+}
+
+.toggle-add-form-btn:hover {
+    background: #fff6b7;
+}
 .debt-form {
     margin-bottom: 20px;
     font-family: "Courier New", monospace;
@@ -23,7 +42,7 @@
 .debt-form button {
     width: 100%;
     padding: 10px;
-    background-color: #fff;
+    background-color: #fffbde;
     color: #000;
     border: 2px solid #000;
     border-radius: 0;
@@ -32,7 +51,7 @@
 }
 
 .debt-form button:hover {
-    background-color: #f0f0f0;
+    background-color: #fff6b7;
 }
 
 .debt-divider {
