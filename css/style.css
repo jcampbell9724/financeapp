@@ -1,7 +1,15 @@
+:root {
+    --border-color: #ddd;
+    --bg-color: #fafafa;
+    --surface-color: #ffffff;
+    --accent-color: #007bff;
+    --highlight-color: #e8f0fe;
+}
+
 body {
-    font-family: "Courier New", monospace;
-    background-color: #f5f5f5;
-    color: #000;
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: #333;
     margin: 0;
     padding: 20px;
 }
@@ -11,9 +19,11 @@ body {
     font-weight: bold;
     padding: 10px;
     margin-bottom: 20px;
-    border: 3px solid #000;
-    background-color: #fffbde;
+    border: 2px solid var(--border-color);
+    background-color: var(--accent-color);
+    color: #fff;
     text-align: center;
+    border-radius: 6px;
 }
 
 .app-container {
@@ -23,16 +33,19 @@ body {
 }
 
 .app-tile {
-    background-color: #fff;
-    border: 3px solid #000;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
     padding: 20px;
     text-align: center;
     cursor: pointer;
-    transition: background-color 0.1s;
+    transition: background-color 0.2s, transform 0.2s;
+    border-radius: 6px;
 }
 
 .app-tile:hover {
-    background-color: #fff6b7;
+    background-color: var(--highlight-color);
+
+    transform: translateY(-2px);
 }
 
 .app-tile__icon {
@@ -61,11 +74,11 @@ body {
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: var(--surface-color);
     padding: 30px;
-    border: 3px solid #000;
-    box-shadow: none;
-    border-radius: 0;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
     position: relative;
     min-width: 400px;
     max-width: 80%;
