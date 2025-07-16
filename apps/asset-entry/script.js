@@ -1,8 +1,18 @@
 function setupAssetEntry() {
     const assetForm = document.getElementById('asset-form');
     const assetList = document.getElementById('asset-list');
+    const toggleAddAssetFormBtn = document.getElementById('toggle-add-asset-form-btn');
+    const addAssetFormContainer = document.getElementById('add-asset-form-container');
     const categories = ['Cash', 'Investment', 'Retirement'];
     let assets = loadAssets();
+
+    if (toggleAddAssetFormBtn) {
+        toggleAddAssetFormBtn.addEventListener('click', () => {
+            const isVisible = addAssetFormContainer.style.display === 'block';
+            addAssetFormContainer.style.display = isVisible ? 'none' : 'block';
+            toggleAddAssetFormBtn.textContent = isVisible ? '+ Add New Asset' : '− Close Form';
+        });
+    }
 
     function loadAssets() {
         return JSON.parse(localStorage.getItem('assets')) || [];
