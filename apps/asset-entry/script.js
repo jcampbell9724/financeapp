@@ -81,6 +81,10 @@ function setupAssetEntry() {
             saveAssets(assets);
             renderAssets();
             assetForm.reset();
+            addAssetFormContainer.style.display = 'none';
+            if (toggleAddAssetFormBtn) {
+                toggleAddAssetFormBtn.textContent = '+ Add New Asset';
+            }
         });
     }
 
