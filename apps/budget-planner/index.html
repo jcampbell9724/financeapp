@@ -1,0 +1,15 @@
+<div class="budget-header">
+    <h2>Budget Planner</h2>
+</div>
+
+<form id="budget-form" class="budget-form">
+    <div class="form-grid">
+        <input type="text" id="budget-category" placeholder="Category" required>
+        <input type="number" id="budget-amount" placeholder="Monthly Budget ($)" step="0.01" required>
+    </div>
+    <button type="submit">Add Budget</button>
+</form>
+
+<div id="budget-list" class="budget-list scrollable">
+    <!-- Budgets will be dynamically added here -->
+</div>

@@ -28,6 +28,27 @@ document.addEventListener('DOMContentLoaded', () => {
             path: 'apps/financial-summary/',
             setupFunction: 'setupFinancialSummary'
         },
+        {
+            id: 'budget-planner',
+            title: 'Budget Planner',
+            icon: '&#128176;',
+            path: 'apps/budget-planner/',
+            setupFunction: 'setupBudgetPlanner'
+        },
+        {
+            id: 'savings-goal',
+            title: 'Savings Goal',
+            icon: '&#128181;',
+            path: 'apps/savings-goal/',
+            setupFunction: 'setupSavingsGoal'
+        },
+        {
+            id: 'expense-tracker',
+            title: 'Expense Tracker',
+            icon: '&#128184;',
+            path: 'apps/expense-tracker/',
+            setupFunction: 'setupExpenseTracker'
+        },
         // {
         //     id: 'app2',
         //     title: 'App Two',
