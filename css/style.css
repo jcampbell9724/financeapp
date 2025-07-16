@@ -1,6 +1,14 @@
+:root {
+    --border-color: #000;
+    --bg-color: #f5f5f5;
+    --surface-color: #fff;
+    --accent-color: #ff006e;
+    --highlight-color: #ffe600;
+}
+
 body {
     font-family: "Courier New", monospace;
-    background-color: #f5f5f5;
+    background-color: var(--bg-color);
     color: #000;
     margin: 0;
     padding: 20px;
@@ -11,8 +19,9 @@ body {
     font-weight: bold;
     padding: 10px;
     margin-bottom: 20px;
-    border: 3px solid #000;
-    background-color: #fffbde;
+    border: 3px solid var(--border-color);
+    background-color: var(--accent-color);
+    color: #fff;
     text-align: center;
 }
 
@@ -23,16 +32,17 @@ body {
 }
 
 .app-tile {
-    background-color: #fff;
-    border: 3px solid #000;
+    background-color: var(--surface-color);
+    border: 3px solid var(--border-color);
     padding: 20px;
     text-align: center;
     cursor: pointer;
-    transition: background-color 0.1s;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
 .app-tile:hover {
-    background-color: #fff6b7;
+    background-color: var(--highlight-color);
+    transform: translateY(-3px);
 }
 
 .app-tile__icon {
@@ -61,9 +71,9 @@ body {
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: var(--surface-color);
     padding: 30px;
-    border: 3px solid #000;
+    border: 3px solid var(--border-color);
     box-shadow: none;
     border-radius: 0;
     position: relative;
