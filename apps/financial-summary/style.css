@@ -7,7 +7,7 @@
 
 .summary-metric {
     padding: 10px;
-    border: 2px solid #000;
-    background: #fff;
+    border: 2px solid var(--border-color);
+    background: var(--surface-color);
     text-align: center;
 }

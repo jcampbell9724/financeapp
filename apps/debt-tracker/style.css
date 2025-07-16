@@ -5,18 +5,21 @@
     align-items: center;
     padding: 10px;
     margin-bottom: 20px;
-    border: 2px solid #000;
-    background-color: #fffbde;
+    border: 2px solid var(--border-color);
+    background-color: var(--accent-color);
+    color: #fff;
 }
 
 .toggle-add-form-btn {
-    background: #fffbde;
-    border: 2px solid #000;
+    background: var(--highlight-color);
+    border: 2px solid var(--border-color);
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .toggle-add-form-btn:hover {
-    background: #fff6b7;
+    background: var(--accent-color);
+    color: #fff;
 }
 .debt-form {
     margin-bottom: 20px;
@@ -33,25 +36,27 @@
 .debt-form input {
     width: 100%;
     padding: 10px;
-    border: 2px solid #000;
+    border: 2px solid var(--border-color);
     border-radius: 0;
-    background: #fff;
+    background: var(--surface-color);
     box-sizing: border-box; /* Important for padding */
 }
 
 .debt-form button {
     width: 100%;
     padding: 10px;
-    background-color: #fffbde;
+    background-color: var(--highlight-color);
     color: #000;
-    border: 2px solid #000;
+    border: 2px solid var(--border-color);
     border-radius: 0;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.2s;
 }
 
 .debt-form button:hover {
-    background-color: #fff6b7;
+    background-color: var(--accent-color);
+    color: #fff;
 }
 
 .debt-divider {
@@ -61,8 +66,8 @@
 }
 
 .debt-account {
-    background-color: #fff;
-    border: 2px solid #000;
+    background-color: var(--surface-color);
+    border: 2px solid var(--border-color);
     border-radius: 0;
     padding: 15px;
     margin-bottom: 15px;
@@ -106,10 +111,10 @@
 }
 
 .debt-account__metric {
-    background-color: #fff;
+    background-color: var(--surface-color);
     padding: 10px;
     border-radius: 0;
-    border: 2px solid #000;
+    border: 2px solid var(--border-color);
 }
 
 .debt-account__footer {
@@ -128,8 +133,8 @@
 .debt-account__edit-form input,
 .debt-account__edit-form button {
     padding: 8px;
-    border: 2px solid #000;
-    background: #fff;
+    border: 2px solid var(--border-color);
+    background: var(--surface-color);
     border-radius: 0;
 }
 
