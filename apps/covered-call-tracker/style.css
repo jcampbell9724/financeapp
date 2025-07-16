@@ -1,0 +1,94 @@
+/* Covered Call Tracker Styles */
+.cc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cc-position-form {
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.cc-position-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--surface-color);
+    box-sizing: border-box;
+}
+
+.cc-position-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--highlight-color);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.cc-position-form button:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+.cc-position-item {
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background: var(--surface-color);
+}
+
+.cc-position-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cc-call-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+.cc-call-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cc-call-list li:last-child {
+    border-bottom: none;
+}
+
+.cc-add-call-form {
+    display: none;
+    margin-top: 10px;
+}
+
+.cc-add-call-form input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+}
+
+.cc-add-call-form button {
+    margin-right: 5px;
+}
+
+.cc-position-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
