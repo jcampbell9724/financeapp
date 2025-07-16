@@ -49,6 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
             path: 'apps/expense-tracker/',
             setupFunction: 'setupExpenseTracker'
         },
+        {
+            id: 'covered-call-tracker',
+            title: 'Covered Calls',
+            icon: '&#128188;',
+            path: 'apps/covered-call-tracker/',
+            setupFunction: 'setupCoveredCallTracker'
+        },
         // {
         //     id: 'app2',
         //     title: 'App Two',
