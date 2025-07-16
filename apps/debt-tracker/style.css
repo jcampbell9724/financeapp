@@ -58,6 +58,13 @@
     border-bottom: 2px solid #000;
 }
 
+.debt-account__header-actions button {
+    margin-left: 5px;
+    background: none;
+    border: 2px solid #000;
+    cursor: pointer;
+}
+
 .debt-account__name {
     font-size: 18px;
     font-weight: bold;
@@ -90,6 +97,25 @@
     font-size: 12px;
     color: #000;
     margin-top: 10px;
+}
+
+.debt-account__edit-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.debt-account__edit-form input,
+.debt-account__edit-form button {
+    padding: 8px;
+    border: 2px solid #000;
+    background: #fff;
+    border-radius: 0;
+}
+
+.debt-account__edit-form button {
+    cursor: pointer;
 }
 
 .debt-account--stale {
