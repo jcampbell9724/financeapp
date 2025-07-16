@@ -6,6 +6,11 @@
     <div class="form-grid">
         <input type="text" id="asset-name" placeholder="Asset Name (e.g., Stocks)" required>
         <input type="number" id="asset-value" placeholder="Current Value ($)" step="0.01" required>
+        <select id="asset-category" required>
+            <option value="Cash">Cash</option>
+            <option value="Investment">Investment</option>
+            <option value="Retirement">Retirement</option>
+        </select>
     </div>
     <button type="submit">Add Asset</button>
 </form>

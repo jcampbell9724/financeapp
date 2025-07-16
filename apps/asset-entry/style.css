@@ -4,7 +4,22 @@
     font-family: "Courier New", monospace;
 }
 
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
 .asset-form input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #000;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.asset-form select {
     width: 100%;
     padding: 10px;
     border: 2px solid #000;
@@ -38,6 +53,61 @@
     border: 2px solid #000;
     margin-bottom: 10px;
     background: #fff;
+}
+
+.asset-item__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.asset-item__header-actions button {
+    margin-left: 5px;
+    background: none;
+    border: 2px solid #000;
+    cursor: pointer;
+}
+
+.asset-item__edit-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.asset-item__edit-form input,
+.asset-item__edit-form select,
+.asset-item__edit-form button {
+    padding: 8px;
+    border: 2px solid #000;
+    background: #fff;
+}
+
+.asset-item__edit-form button {
+    cursor: pointer;
+}
+
+.asset-history {
+    display: none;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.asset-history-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.asset-history-item {
+    font-size: 14px;
+    padding: 5px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.asset-history-item:last-child {
+    border-bottom: none;
 }
 
 .asset-list {
