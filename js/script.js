@@ -15,13 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setupFunction: 'setupDebtTracker'
         },
         {
-            id: 'asset-entry',
-            title: 'Asset Entry',
-            icon: '&#128200;',
-            path: 'apps/asset-entry/',
-            setupFunction: 'setupAssetEntry'
-        },
-        {
             id: 'asset-tracker',
             title: 'Asset Tracker',
             icon: '&#128200;',
@@ -63,18 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
             path: 'apps/covered-call-tracker/',
             setupFunction: 'setupCoveredCallTracker'
         },
-        // {
-        //     id: 'app2',
-        //     title: 'App Two',
-        //     icon: '&#128202;',
-        //     path: 'apps/app2/' // Example for a future app
-        // },
-        // {
-        //     id: 'settings',
-        //     title: 'Settings',
-        //     icon: '&#9881;',
-        //     path: 'apps/settings/' // Example for a future app
-        // }
     ];
 
     // Dynamically loads all app resources
