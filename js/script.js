@@ -116,17 +116,75 @@ document.addEventListener('DOMContentLoaded', () => {
         currentApp = {};
     };
 
+    // Helper functions for drag and drop ordering
+    const saveTileOrder = () => {
+        const ids = Array.from(appContainer.querySelectorAll('.app-tile'))
+            .map(tile => tile.dataset.id);
+        localStorage.setItem('appOrder', JSON.stringify(ids));
+    };
+
+    const loadTileOrder = () => {
+        const stored = localStorage.getItem('appOrder');
+        if (!stored) return;
+        try {
+            const ids = JSON.parse(stored);
+            ids.forEach(id => {
+                const tile = appContainer.querySelector(`[data-id="${id}"]`);
+                if (tile) appContainer.appendChild(tile);
+            });
+        } catch (e) {
+            console.error('Failed to parse app order', e);
+        }
+    };
+
+    const getDragAfterElement = (container, y) => {
+        const draggables = [...container.querySelectorAll('.app-tile:not(.dragging)')];
+        return draggables.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    };
+
     // Generate app tiles from the manifest
     apps.forEach(app => {
         const tile = document.createElement('div');
         tile.className = 'app-tile';
+        tile.draggable = true;
+        tile.dataset.id = app.id;
         tile.innerHTML = `
             <div class="app-tile__icon">${app.icon}</div>
             <div class="app-tile__title">${app.title}</div>
         `;
         tile.addEventListener('click', () => openModal(app));
+        tile.addEventListener('dragstart', () => {
+            tile.classList.add('dragging');
+        });
+        tile.addEventListener('dragend', () => {
+            tile.classList.remove('dragging');
+            saveTileOrder();
+        });
         appContainer.appendChild(tile);
     });
+
+    appContainer.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(appContainer, e.clientY);
+        const dragging = document.querySelector('.dragging');
+        if (!dragging) return;
+        if (afterElement == null) {
+            appContainer.appendChild(dragging);
+        } else {
+            appContainer.insertBefore(dragging, afterElement);
+        }
+    });
+
+    // Load any saved order on startup
+    loadTileOrder();
 
     // Event listeners for closing the modal
     modalClose.addEventListener('click', closeModal);
