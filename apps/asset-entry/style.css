@@ -5,13 +5,13 @@
     align-items: center;
     padding: 10px;
     margin-bottom: 20px;
-    border: 2px solid #000;
+    border: 1px solid var(--border-color);
     background-color: #fffbde;
 }
 
 .toggle-add-form-btn {
     background: #fffbde;
-    border: 2px solid #000;
+    border: 1px solid var(--border-color);
     cursor: pointer;
 }
 
@@ -56,7 +56,7 @@
 .asset-form select {
     width: 100%;
     padding: 10px;
-    border: 2px solid #000;
+    border: 1px solid var(--border-color);
     background: #fff;
     box-sizing: border-box;
 }
@@ -161,7 +161,7 @@
 .asset-item__header-actions button {
     margin-left: 5px;
     background: none;
-    border: 2px solid #000;
+    border: 1px solid var(--border-color);
     cursor: pointer;
 }
 
@@ -176,7 +176,7 @@
 .asset-item__edit-form select,
 .asset-item__edit-form button {
     padding: 8px;
-    border: 2px solid #000;
+    border: 1px solid var(--border-color);
     background: #fff;
 }
 

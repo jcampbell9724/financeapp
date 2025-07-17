@@ -4,10 +4,11 @@
     --surface-color: #ffffff;
     --accent-color: #007bff;
     --highlight-color: #e8f0fe;
+    --shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg-color);
     color: #333;
     margin: 0;
@@ -17,13 +18,13 @@ body {
 .header {
     font-size: 32px;
     font-weight: bold;
-    padding: 10px;
+    padding: 20px;
     margin-bottom: 20px;
-    border: 2px solid var(--border-color);
     background-color: var(--accent-color);
     color: #fff;
     text-align: center;
-    border-radius: 6px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
 }
 
 .app-container {
@@ -34,17 +35,18 @@ body {
 
 .app-tile {
     background-color: var(--surface-color);
-    border: 1px solid var(--border-color);
+    border: none;
     padding: 20px;
     text-align: center;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
-    border-radius: 6px;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
 }
 
 .app-tile:hover {
     background-color: var(--highlight-color);
-
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
 }
 
@@ -76,9 +78,9 @@ body {
 .modal-content {
     background-color: var(--surface-color);
     padding: 30px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
+    border: none;
+    box-shadow: var(--shadow);
+    border-radius: 8px;
     position: relative;
     min-width: 400px;
     max-width: 80%;
