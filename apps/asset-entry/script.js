@@ -15,7 +15,16 @@ function setupAssetEntry() {
     }
 
     function loadAssets() {
-        return JSON.parse(localStorage.getItem('assets')) || [];
+        const stored = localStorage.getItem('assets');
+        if (!stored) {
+            return [];
+        }
+        try {
+            return JSON.parse(stored);
+        } catch (e) {
+            console.error('Error parsing assets from localStorage', e);
+            return [];
+        }
     }
 
     function saveAssets(newAssets) {

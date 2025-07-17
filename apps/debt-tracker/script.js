@@ -43,7 +43,16 @@ function setupDebtTracker(sharedData) {
 
     // Function to load debts from localStorage
     function loadDebts() {
-        return JSON.parse(localStorage.getItem('debts')) || [];
+        const stored = localStorage.getItem('debts');
+        if (!stored) {
+            return [];
+        }
+        try {
+            return JSON.parse(stored);
+        } catch (e) {
+            console.error('Error parsing debts from localStorage', e);
+            return [];
+        }
     }
 
     // Function to save debts to localStorage
