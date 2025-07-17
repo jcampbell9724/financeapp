@@ -8,6 +8,9 @@ function setupAssetEntry() {
 
     if (toggleAddAssetFormBtn) {
         toggleAddAssetFormBtn.addEventListener('click', () => {
+            if (!addAssetFormContainer) {
+                return;
+            }
             const isVisible = addAssetFormContainer.style.display === 'block';
             addAssetFormContainer.style.display = isVisible ? 'none' : 'block';
             toggleAddAssetFormBtn.textContent = isVisible ? '+ Add New Asset' : '− Close Form';
@@ -81,7 +84,9 @@ function setupAssetEntry() {
             saveAssets(assets);
             renderAssets();
             assetForm.reset();
-            addAssetFormContainer.style.display = 'none';
+            if (addAssetFormContainer) {
+                addAssetFormContainer.style.display = 'none';
+            }
             if (toggleAddAssetFormBtn) {
                 toggleAddAssetFormBtn.textContent = '+ Add New Asset';
             }
