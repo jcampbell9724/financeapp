@@ -13,12 +13,13 @@ function setupCoveredCallTracker() {
 
     function calculateMetrics(position) {
         const totalPremium = position.calls.reduce((sum, c) => sum + parseFloat(c.premium), 0);
+        const pricePerShare = position.basis / position.shares;
         const adjustedBasis = (position.basis - totalPremium) / position.shares;
         let pnl = null;
         if (typeof position.salePrice === 'number') {
             pnl = (position.salePrice * position.shares + totalPremium) - position.basis;
         }
-        return { totalPremium, adjustedBasis, pnl };
+        return { totalPremium, pricePerShare, adjustedBasis, pnl };
     }
 
     function renderPositions() {
@@ -68,6 +69,7 @@ function setupCoveredCallTracker() {
                     </div>
                 </div>
                 <p><strong>Basis:</strong> $${p.basis.toFixed(2)}</p>
+                <p><strong>Price/Share:</strong> $${metrics.pricePerShare.toFixed(2)}</p>
                 <p><strong>Total Premium:</strong> $${metrics.totalPremium.toFixed(2)}</p>
                 <p><strong>Adjusted Cost/Share:</strong> $${metrics.adjustedBasis.toFixed(2)}</p>
                 ${saleInfo}
