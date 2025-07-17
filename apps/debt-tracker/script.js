@@ -11,6 +11,9 @@ function setupDebtTracker(sharedData) {
     // Toggle the "Add New Account" form
     if (toggleAddFormBtn) {
         toggleAddFormBtn.addEventListener('click', () => {
+            if (!addDebtFormContainer) {
+                return;
+            }
             const isVisible = addDebtFormContainer.style.display === 'block';
             addDebtFormContainer.style.display = isVisible ? 'none' : 'block';
             toggleAddFormBtn.textContent = isVisible ? '+ Add New Account' : '− Close Form';
@@ -36,8 +39,12 @@ function setupDebtTracker(sharedData) {
             saveDebts(debts);
             renderDebtAccounts();
             debtForm.reset();
-            addDebtFormContainer.style.display = 'none'; // Hide form after adding
-            toggleAddFormBtn.textContent = '+ Add New Account';
+            if (addDebtFormContainer) {
+                addDebtFormContainer.style.display = 'none'; // Hide form after adding
+            }
+            if (toggleAddFormBtn) {
+                toggleAddFormBtn.textContent = '+ Add New Account';
+            }
         });
     }
 
