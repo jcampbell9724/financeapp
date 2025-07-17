@@ -108,12 +108,27 @@ function setupDebtTracker(sharedData) {
         };
     }
 
+    function getMonthRange(start, end) {
+        const result = [];
+        const current = new Date(start + '-01');
+        const last = new Date(end + '-01');
+        while (current <= last) {
+            result.push(current.toISOString().slice(0, 7));
+            current.setMonth(current.getMonth() + 1);
+        }
+        return result;
+    }
+
     // Function to render the debt accounts
     function renderDebtAccounts() {
         if (!debtAccountsContainer) return;
         debtAccountsContainer.innerHTML = '';
         debts.forEach(debt => {
             const metrics = calculateMetrics(debt);
+            const monthKeys = Object.keys(debt.monthlyBalances || {}).sort();
+            const earliestMonth = monthKeys.length ? monthKeys[0] : new Date().toISOString().slice(0, 7);
+            const latestMonth = new Date().toISOString().slice(0, 7);
+            const monthRange = getMonthRange(earliestMonth, latestMonth);
             const accountCard = document.createElement('div');
             accountCard.className = 'debt-account';
             accountCard.dataset.id = debt.id;
@@ -143,11 +158,14 @@ function setupDebtTracker(sharedData) {
                 </div>
                 <div class="debt-account__monthly-balances">
                     <h4>Monthly Balances</h4>
-                    <ul class="debt-account__monthly-list">
-                        ${Object.entries(debt.monthlyBalances || {}).map(([m, v]) => `
-                            <li class="debt-account__monthly-item">${m}: $${v.toFixed(2)}</li>
-                        `).join('')}
-                    </ul>
+                    <table class="debt-account__monthly-table">
+                        <tr>
+                            ${monthRange.map(m => `<th>${m}</th>`).join('')}
+                        </tr>
+                        <tr>
+                            ${monthRange.map(m => `<td>$${(debt.monthlyBalances && debt.monthlyBalances[m] ? debt.monthlyBalances[m] : 0).toFixed(2)}</td>`).join('')}
+                        </tr>
+                    </table>
                 </div>
                 <form class="debt-account__edit-form" style="display:none">
                     <input type="text" class="edit-debt-name" value="${debt.name}" required>
