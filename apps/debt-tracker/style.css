@@ -178,6 +178,25 @@
     border-bottom: none;
 }
 
+.debt-account__monthly-balances {
+    margin-top: 10px;
+}
+
+.debt-account__monthly-list {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 12px;
+}
+
+.debt-account__monthly-item {
+    padding: 3px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.debt-account__monthly-item:last-child {
+    border-bottom: none;
+}
+
 /* Allow sections marked as scrollable to scroll independently */
 .scrollable {
     max-height: 400px;

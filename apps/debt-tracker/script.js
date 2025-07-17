@@ -26,6 +26,7 @@ function setupDebtTracker(sharedData) {
             e.preventDefault();
             const now = new Date().toISOString();
             const principal = parseFloat(document.getElementById('debt-principal').value);
+            const currentMonth = now.slice(0, 7);
             const newDebt = {
                 id: Date.now(),
                 name: document.getElementById('debt-name').value,
@@ -33,6 +34,7 @@ function setupDebtTracker(sharedData) {
                 payment: parseFloat(document.getElementById('debt-payment').value),
                 rate: parseFloat(document.getElementById('debt-rate').value),
                 lastUpdated: now,
+                monthlyBalances: { [currentMonth]: principal },
                 history: [{ date: now, principal: principal, event: 'Account Created' }]
             };
             debts.push(newDebt);
@@ -139,12 +141,18 @@ function setupDebtTracker(sharedData) {
                     <div class="debt-account__metric">Yearly Interest: $${metrics.yearlyInterest}</div>
                     <div class="debt-account__metric">Payoff Date: ${metrics.payoffDate}</div>
                 </div>
-                <div class="debt-account__footer">
-                    Last updated: ${new Date(debt.lastUpdated).toLocaleDateString()}
+                <div class="debt-account__monthly-balances">
+                    <h4>Monthly Balances</h4>
+                    <ul class="debt-account__monthly-list">
+                        ${Object.entries(debt.monthlyBalances || {}).map(([m, v]) => `
+                            <li class="debt-account__monthly-item">${m}: $${v.toFixed(2)}</li>
+                        `).join('')}
+                    </ul>
                 </div>
                 <form class="debt-account__edit-form" style="display:none">
                     <input type="text" class="edit-debt-name" value="${debt.name}" required>
                     <input type="number" class="edit-debt-principal" value="${debt.principal}" step="0.01" required>
+                    <input type="month" class="edit-debt-month" value="${new Date().toISOString().slice(0,7)}" required>
                     <input type="number" class="edit-debt-payment" value="${debt.payment}" step="0.01" required>
                     <input type="number" class="edit-debt-rate" value="${debt.rate}" step="0.01" required>
                     <button type="submit" class="save-debt-btn">Save</button>
@@ -213,6 +221,7 @@ function setupDebtTracker(sharedData) {
                         form.querySelector('.edit-debt-principal').value = debt.principal;
                         form.querySelector('.edit-debt-payment').value = debt.payment;
                         form.querySelector('.edit-debt-rate').value = debt.rate;
+                        form.querySelector('.edit-debt-month').value = new Date().toISOString().slice(0, 7);
                     }
                     form.style.display = 'none';
                 }
@@ -238,11 +247,14 @@ function setupDebtTracker(sharedData) {
                 if (!debt) return;
                 const now = new Date().toISOString();
                 const newPrincipal = parseFloat(e.target.querySelector('.edit-debt-principal').value);
+                const month = e.target.querySelector('.edit-debt-month').value || now.slice(0, 7);
                 debt.name = e.target.querySelector('.edit-debt-name').value;
                 debt.principal = newPrincipal;
                 debt.payment = parseFloat(e.target.querySelector('.edit-debt-payment').value);
                 debt.rate = parseFloat(e.target.querySelector('.edit-debt-rate').value);
                 debt.lastUpdated = now;
+                debt.monthlyBalances = debt.monthlyBalances || {};
+                debt.monthlyBalances[month] = newPrincipal;
                 debt.history.push({ date: now, principal: newPrincipal, event: 'Account Updated' });
                 saveDebts(debts);
                 renderDebtAccounts();
