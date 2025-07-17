@@ -30,12 +30,13 @@
 
 .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 15px;
     margin-bottom: 15px;
 }
 
-.asset-form input {
+.asset-form input,
+.asset-form select {
     width: 100%;
     padding: 10px;
     border: 1px solid var(--border-color);
@@ -136,6 +137,7 @@
 }
 
 .asset-account__edit-form input,
+.asset-account__edit-form select,
 .asset-account__edit-form button {
     padding: 8px;
     border: 1px solid var(--border-color);
