@@ -1,0 +1,204 @@
+/* Asset Tracker Styles */
+.asset-tracker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    background-color: var(--accent-color);
+    color: #fff;
+    border-radius: 6px;
+}
+
+.toggle-add-form-btn {
+    background: var(--highlight-color);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 4px;
+}
+
+.toggle-add-form-btn:hover {
+    background: var(--accent-color);
+    color: #fff;
+}
+.asset-form {
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.asset-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--surface-color);
+    box-sizing: border-box; /* Important for padding */
+}
+
+.asset-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--highlight-color);
+    color: #000;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.asset-form button:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+.asset-divider {
+    border: none;
+    border-top: 2px solid var(--border-color);
+    margin: 20px 0;
+}
+
+.asset-account {
+    background-color: var(--surface-color);
+
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.asset-account__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.asset-account__header-actions button {
+    margin-left: 5px;
+    background: none;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.asset-account__name {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.asset-account__delete-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: #ff4d4d;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.asset-account__metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.asset-account__metric {
+    background-color: var(--surface-color);
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.asset-account__footer {
+    font-size: 12px;
+    color: #333;
+    margin-top: 10px;
+}
+
+.asset-account__edit-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.asset-account__edit-form input,
+.asset-account__edit-form button {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--surface-color);
+    border-radius: 4px;
+}
+
+.asset-account__edit-form button {
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.asset-account--stale {
+    border-left: 5px solid #f44336; /* Red flag for stale accounts */
+}
+
+.asset-account__history {
+    display: none; /* Hidden by default */
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.asset-account__history h4 {
+    margin-bottom: 10px;
+}
+
+.asset-account__history-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.asset-account__history-item {
+    font-size: 14px;
+    padding: 5px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.asset-account__history-item:last-child {
+    border-bottom: none;
+}
+
+.asset-account__monthly-balances {
+    margin-top: 10px;
+}
+
+.asset-account__monthly-list {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 12px;
+}
+
+.asset-account__monthly-item {
+    padding: 3px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.asset-account__monthly-item:last-child {
+    border-bottom: none;
+}
+
+/* Allow sections marked as scrollable to scroll independently */
+.scrollable {
+    max-height: 400px;
+    overflow-y: auto;
+}
