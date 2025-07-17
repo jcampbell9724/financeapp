@@ -8,8 +8,12 @@
         <div class="form-grid">
             <input type="text" id="asset-name" placeholder="Account Name (e.g., Savings Account)" required>
             <input type="number" id="asset-principal" placeholder="Current Value ($)" required step="0.01">
-            <input type="number" id="asset-payment" placeholder="Monthly Contribution ($)" required step="0.01">
-            <input type="number" id="asset-rate" placeholder="Growth Rate (%)" required step="0.01">
+            <select id="asset-category">
+                <option value="Cash">Cash</option>
+                <option value="Investment">Investment</option>
+                <option value="Retirement">Retirement</option>
+                <option value="Other">Other</option>
+            </select>
         </div>
         <button type="submit">Add Account</button>
     </form>

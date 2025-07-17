@@ -31,8 +31,7 @@ function setupAssetTracker(sharedData) {
                 id: Date.now(),
                 name: document.getElementById('asset-name').value,
                 principal: principal,
-                payment: parseFloat(document.getElementById('asset-payment').value),
-                rate: parseFloat(document.getElementById('asset-rate').value),
+                category: document.getElementById('asset-category').value,
                 lastUpdated: now,
                 monthlyBalances: { [currentMonth]: principal },
                 history: [{ date: now, principal: principal, event: 'Account Created' }]
@@ -69,51 +68,11 @@ function setupAssetTracker(sharedData) {
         localStorage.setItem('assets', JSON.stringify(assetsToSave));
     }
 
-    // Function to calculate asset metrics
-    function calculateMetrics(asset) {
-        const monthlyInterestRate = (asset.rate / 100) / 12;
-        const dailyInterest = (asset.principal * (asset.rate / 100)) / 365;
-
-        if (monthlyInterestRate === 0) {
-            const paymentsLeft = Math.ceil(asset.principal / asset.payment);
-            const payoffDate = new Date();
-            payoffDate.setMonth(payoffDate.getMonth() + paymentsLeft);
-            return {
-                dailyCarryingCost: dailyInterest.toFixed(2),
-                paymentsLeft: paymentsLeft,
-                payoffDate: payoffDate.toLocaleDateString(),
-                yearlyInterest: (dailyInterest * 365).toFixed(2)
-            };
-        }
-
-        if (asset.payment <= asset.principal * monthlyInterestRate) {
-            return {
-                dailyCarryingCost: dailyInterest.toFixed(2),
-                paymentsLeft: 'Infinite',
-                payoffDate: 'Never',
-                yearlyInterest: (dailyInterest * 365).toFixed(2)
-            };
-        }
-
-        const n = -Math.log(1 - (asset.principal * monthlyInterestRate) / asset.payment) / Math.log(1 + monthlyInterestRate);
-        const paymentsLeft = Math.ceil(n);
-        const payoffDate = new Date();
-        payoffDate.setMonth(payoffDate.getMonth() + paymentsLeft);
-
-        return {
-            dailyCarryingCost: dailyInterest.toFixed(2),
-            paymentsLeft: paymentsLeft,
-            payoffDate: payoffDate.toLocaleDateString(),
-            yearlyInterest: (dailyInterest * 365).toFixed(2)
-        };
-    }
-
     // Function to render the asset accounts
     function renderAssetAccounts() {
         if (!assetAccountsContainer) return;
         assetAccountsContainer.innerHTML = '';
         assets.forEach(asset => {
-            const metrics = calculateMetrics(asset);
             const accountCard = document.createElement('div');
             accountCard.className = 'asset-account';
             accountCard.dataset.id = asset.id;
@@ -135,12 +94,7 @@ function setupAssetTracker(sharedData) {
                     </div>
                 </div>
                 <p><strong>Principal:</strong> $${asset.principal.toFixed(2)}</p>
-                <div class="asset-account__metrics">
-                    <div class="asset-account__metric">Daily Cost: $${metrics.dailyCarryingCost}</div>
-                    <div class="asset-account__metric">Payments Left: ${metrics.paymentsLeft}</div>
-                    <div class="asset-account__metric">Yearly Interest: $${metrics.yearlyInterest}</div>
-                    <div class="asset-account__metric">Payoff Date: ${metrics.payoffDate}</div>
-                </div>
+                <p><strong>Category:</strong> ${asset.category}</p>
                 <div class="asset-account__monthly-balances">
                     <h4>Monthly Balances</h4>
                     <ul class="asset-account__monthly-list">
@@ -153,8 +107,12 @@ function setupAssetTracker(sharedData) {
                     <input type="text" class="edit-asset-name" value="${asset.name}" required>
                     <input type="number" class="edit-asset-principal" value="${asset.principal}" step="0.01" required>
                     <input type="month" class="edit-asset-month" value="${new Date().toISOString().slice(0,7)}" required>
-                    <input type="number" class="edit-asset-payment" value="${asset.payment}" step="0.01" required>
-                    <input type="number" class="edit-asset-rate" value="${asset.rate}" step="0.01" required>
+                    <select class="edit-asset-category">
+                        <option value="Cash" ${asset.category === 'Cash' ? 'selected' : ''}>Cash</option>
+                        <option value="Investment" ${asset.category === 'Investment' ? 'selected' : ''}>Investment</option>
+                        <option value="Retirement" ${asset.category === 'Retirement' ? 'selected' : ''}>Retirement</option>
+                        <option value="Other" ${asset.category === 'Other' ? 'selected' : ''}>Other</option>
+                    </select>
                     <button type="submit" class="save-asset-btn">Save</button>
                     <button type="button" class="cancel-edit-btn">Cancel</button>
                 </form>
@@ -219,8 +177,7 @@ function setupAssetTracker(sharedData) {
                     if (asset) {
                         form.querySelector('.edit-asset-name').value = asset.name;
                         form.querySelector('.edit-asset-principal').value = asset.principal;
-                        form.querySelector('.edit-asset-payment').value = asset.payment;
-                        form.querySelector('.edit-asset-rate').value = asset.rate;
+                        form.querySelector('.edit-asset-category').value = asset.category;
                         form.querySelector('.edit-asset-month').value = new Date().toISOString().slice(0, 7);
                     }
                     form.style.display = 'none';
@@ -250,8 +207,7 @@ function setupAssetTracker(sharedData) {
                 const month = e.target.querySelector('.edit-asset-month').value || now.slice(0, 7);
                 asset.name = e.target.querySelector('.edit-asset-name').value;
                 asset.principal = newPrincipal;
-                asset.payment = parseFloat(e.target.querySelector('.edit-asset-payment').value);
-                asset.rate = parseFloat(e.target.querySelector('.edit-asset-rate').value);
+                asset.category = e.target.querySelector('.edit-asset-category').value;
                 asset.lastUpdated = now;
                 asset.monthlyBalances = asset.monthlyBalances || {};
                 asset.monthlyBalances[month] = newPrincipal;
