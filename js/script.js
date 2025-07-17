@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
             setupFunction: 'setupAssetEntry'
         },
         {
+            id: 'asset-tracker',
+            title: 'Asset Tracker',
+            icon: '&#128200;',
+            path: 'apps/asset-tracker/',
+            setupFunction: 'setupAssetTracker'
+        },
+        {
             id: 'financial-summary',
             title: 'Financial Summary',
             icon: '&#128201;',

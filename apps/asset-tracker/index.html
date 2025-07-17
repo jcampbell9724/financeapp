@@ -1,0 +1,22 @@
+<div class="asset-tracker-header">
+    <h2>Asset Tracker</h2>
+    <button id="toggle-add-form-btn" class="toggle-add-form-btn">+ Add New Account</button>
+</div>
+
+<div id="add-asset-form-container" class="add-asset-form-container" style="display: none;">
+    <form id="asset-form" class="asset-form">
+        <div class="form-grid">
+            <input type="text" id="asset-name" placeholder="Account Name (e.g., Savings Account)" required>
+            <input type="number" id="asset-principal" placeholder="Current Value ($)" required step="0.01">
+            <input type="number" id="asset-payment" placeholder="Monthly Contribution ($)" required step="0.01">
+            <input type="number" id="asset-rate" placeholder="Growth Rate (%)" required step="0.01">
+        </div>
+        <button type="submit">Add Account</button>
+    </form>
+</div>
+
+<hr class="asset-divider">
+
+<div id="asset-accounts-container" class="asset-accounts-container scrollable">
+    <!-- Asset accounts will be dynamically added here -->
+</div>
