@@ -14,7 +14,11 @@ function setupCoveredCallTracker() {
     function calculateMetrics(position) {
         const totalPremium = position.calls.reduce((sum, c) => sum + parseFloat(c.premium), 0);
         const adjustedBasis = (position.basis - totalPremium) / position.shares;
-        return { totalPremium, adjustedBasis };
+        let pnl = null;
+        if (typeof position.salePrice === 'number') {
+            pnl = (position.salePrice * position.shares + totalPremium) - position.basis;
+        }
+        return { totalPremium, adjustedBasis, pnl };
     }
 
     function renderPositions() {
@@ -25,26 +29,28 @@ function setupCoveredCallTracker() {
             const item = document.createElement('div');
             item.className = 'cc-position-item';
             item.dataset.id = p.id;
-            item.innerHTML = `
-                <div class="cc-position-header">
-                    <span>${p.ticker} - ${p.shares} shares</span>
-                    <div>
-                        <button class="add-call-btn">Add Call</button>
-                        <button class="delete-position-btn">Delete</button>
-                    </div>
-                </div>
-                <p><strong>Basis:</strong> $${p.basis.toFixed(2)}</p>
-                <p><strong>Total Premium:</strong> $${metrics.totalPremium.toFixed(2)}</p>
-                <p><strong>Adjusted Cost/Share:</strong> $${metrics.adjustedBasis.toFixed(2)}</p>
-                <h4>Calls</h4>
-                <ul class="cc-call-list">
-                    ${p.calls.map(c => `
+
+            const callList = p.calls.map(c => `
                         <li data-call-id="${c.id}">
                             $${c.strike} @ $${c.premium} exp ${c.expiry}
                             <button class="delete-call-btn">Delete</button>
                         </li>
-                    `).join('')}
-                </ul>
+                    `).join('');
+
+            const headerButtons = p.salePrice === undefined ? `
+                        <button class="add-call-btn">Add Call</button>
+                        <button class="sell-shares-btn">Sell</button>
+                        <button class="delete-position-btn">Delete</button>
+                    ` : `
+                        <button class="delete-position-btn">Delete</button>
+                    `;
+
+            const saleInfo = p.salePrice === undefined ? '' : `
+                <p><strong>Sale Price:</strong> $${p.salePrice.toFixed(2)}</p>
+                <p><strong>Total PnL:</strong> $${metrics.pnl.toFixed(2)}</p>
+            `;
+
+            const addCallForm = p.salePrice === undefined ? `
                 <form class="cc-add-call-form">
                     <input type="number" class="cc-call-strike" placeholder="Strike" step="0.01" required>
                     <input type="number" class="cc-call-premium" placeholder="Premium" step="0.01" required>
@@ -52,6 +58,24 @@ function setupCoveredCallTracker() {
                     <button type="submit">Save</button>
                     <button type="button" class="cancel-add-call-btn">Cancel</button>
                 </form>
+            ` : '';
+
+            item.innerHTML = `
+                <div class="cc-position-header">
+                    <span>${p.ticker} - ${p.shares} shares</span>
+                    <div>
+                        ${headerButtons}
+                    </div>
+                </div>
+                <p><strong>Basis:</strong> $${p.basis.toFixed(2)}</p>
+                <p><strong>Total Premium:</strong> $${metrics.totalPremium.toFixed(2)}</p>
+                <p><strong>Adjusted Cost/Share:</strong> $${metrics.adjustedBasis.toFixed(2)}</p>
+                ${saleInfo}
+                <h4>Calls</h4>
+                <ul class="cc-call-list">
+                    ${callList}
+                </ul>
+                ${addCallForm}
             `;
             positionList.appendChild(item);
         });
@@ -71,7 +95,8 @@ function setupCoveredCallTracker() {
                 ticker: ticker,
                 basis: basis,
                 shares: shares,
-                calls: []
+                calls: [],
+                salePrice: undefined
             };
             if (strikeVal && premiumVal && expiryVal) {
                 newPosition.calls.push({
@@ -107,6 +132,19 @@ function setupCoveredCallTracker() {
             if (e.target.classList.contains('cancel-add-call-btn')) {
                 const form = e.target.closest('.cc-add-call-form');
                 if (form) form.style.display = 'none';
+                return;
+            }
+
+            if (e.target.classList.contains('sell-shares-btn')) {
+                const priceStr = prompt('Sale price per share?');
+                if (priceStr !== null) {
+                    const price = parseFloat(priceStr);
+                    if (!isNaN(price)) {
+                        position.salePrice = price;
+                        savePositions(positions);
+                        renderPositions();
+                    }
+                }
                 return;
             }
 
