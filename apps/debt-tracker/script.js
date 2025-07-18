@@ -108,12 +108,25 @@ function setupDebtTracker(sharedData) {
         };
     }
 
+    function getYearMonths(year) {
+        const result = [];
+        for (let i = 0; i < 12; i++) {
+            const date = new Date(Date.UTC(year, i, 1));
+            result.push(date.toISOString().slice(0, 7));
+        }
+        return result;
+    }
+
     // Function to render the debt accounts
     function renderDebtAccounts() {
         if (!debtAccountsContainer) return;
         debtAccountsContainer.innerHTML = '';
         debts.forEach(debt => {
             const metrics = calculateMetrics(debt);
+            const accountYear = debt.lastUpdated
+                ? new Date(debt.lastUpdated).getFullYear()
+                : new Date().getFullYear();
+            const monthRange = getYearMonths(accountYear);
             const accountCard = document.createElement('div');
             accountCard.className = 'debt-account';
             accountCard.dataset.id = debt.id;
@@ -143,11 +156,14 @@ function setupDebtTracker(sharedData) {
                 </div>
                 <div class="debt-account__monthly-balances">
                     <h4>Monthly Balances</h4>
-                    <ul class="debt-account__monthly-list">
-                        ${Object.entries(debt.monthlyBalances || {}).map(([m, v]) => `
-                            <li class="debt-account__monthly-item">${m}: $${v.toFixed(2)}</li>
-                        `).join('')}
-                    </ul>
+                    <table class="debt-account__monthly-table">
+                        <tr>
+                            ${monthRange.map(m => `<th>${m}</th>`).join('')}
+                        </tr>
+                        <tr>
+                            ${monthRange.map(m => `<td>$${(debt.monthlyBalances && debt.monthlyBalances[m] ? debt.monthlyBalances[m] : 0).toFixed(2)}</td>`).join('')}
+                        </tr>
+                    </table>
                 </div>
                 <form class="debt-account__edit-form" style="display:none">
                     <input type="text" class="edit-debt-name" value="${debt.name}" required>
@@ -245,17 +261,18 @@ function setupDebtTracker(sharedData) {
                 const debtId = parseInt(card.dataset.id, 10);
                 const debt = debts.find(d => d.id === debtId);
                 if (!debt) return;
-                const now = new Date().toISOString();
                 const newPrincipal = parseFloat(e.target.querySelector('.edit-debt-principal').value);
-                const month = e.target.querySelector('.edit-debt-month').value || now.slice(0, 7);
+                const monthInput = e.target.querySelector('.edit-debt-month').value;
+                const month = monthInput || new Date().toISOString().slice(0, 7);
+                const updateDate = new Date(month + '-01').toISOString();
                 debt.name = e.target.querySelector('.edit-debt-name').value;
                 debt.principal = newPrincipal;
                 debt.payment = parseFloat(e.target.querySelector('.edit-debt-payment').value);
                 debt.rate = parseFloat(e.target.querySelector('.edit-debt-rate').value);
-                debt.lastUpdated = now;
+                debt.lastUpdated = updateDate;
                 debt.monthlyBalances = debt.monthlyBalances || {};
                 debt.monthlyBalances[month] = newPrincipal;
-                debt.history.push({ date: now, principal: newPrincipal, event: 'Account Updated' });
+                debt.history.push({ date: updateDate, principal: newPrincipal, event: 'Account Updated' });
                 saveDebts(debts);
                 renderDebtAccounts();
             }
