@@ -108,13 +108,11 @@ function setupDebtTracker(sharedData) {
         };
     }
 
-    function getMonthRange(start, end) {
+    function getYearMonths(year) {
         const result = [];
-        const current = new Date(start + '-01');
-        const last = new Date(end + '-01');
-        while (current <= last) {
-            result.push(current.toISOString().slice(0, 7));
-            current.setMonth(current.getMonth() + 1);
+        for (let i = 0; i < 12; i++) {
+            const date = new Date(Date.UTC(year, i, 1));
+            result.push(date.toISOString().slice(0, 7));
         }
         return result;
     }
@@ -125,10 +123,10 @@ function setupDebtTracker(sharedData) {
         debtAccountsContainer.innerHTML = '';
         debts.forEach(debt => {
             const metrics = calculateMetrics(debt);
-            const monthKeys = Object.keys(debt.monthlyBalances || {}).sort();
-            const earliestMonth = monthKeys.length ? monthKeys[0] : new Date().toISOString().slice(0, 7);
-            const latestMonth = new Date().toISOString().slice(0, 7);
-            const monthRange = getMonthRange(earliestMonth, latestMonth);
+            const accountYear = debt.lastUpdated
+                ? new Date(debt.lastUpdated).getFullYear()
+                : new Date().getFullYear();
+            const monthRange = getYearMonths(accountYear);
             const accountCard = document.createElement('div');
             accountCard.className = 'debt-account';
             accountCard.dataset.id = debt.id;
@@ -263,17 +261,18 @@ function setupDebtTracker(sharedData) {
                 const debtId = parseInt(card.dataset.id, 10);
                 const debt = debts.find(d => d.id === debtId);
                 if (!debt) return;
-                const now = new Date().toISOString();
                 const newPrincipal = parseFloat(e.target.querySelector('.edit-debt-principal').value);
-                const month = e.target.querySelector('.edit-debt-month').value || now.slice(0, 7);
+                const monthInput = e.target.querySelector('.edit-debt-month').value;
+                const month = monthInput || new Date().toISOString().slice(0, 7);
+                const updateDate = new Date(month + '-01').toISOString();
                 debt.name = e.target.querySelector('.edit-debt-name').value;
                 debt.principal = newPrincipal;
                 debt.payment = parseFloat(e.target.querySelector('.edit-debt-payment').value);
                 debt.rate = parseFloat(e.target.querySelector('.edit-debt-rate').value);
-                debt.lastUpdated = now;
+                debt.lastUpdated = updateDate;
                 debt.monthlyBalances = debt.monthlyBalances || {};
                 debt.monthlyBalances[month] = newPrincipal;
-                debt.history.push({ date: now, principal: newPrincipal, event: 'Account Updated' });
+                debt.history.push({ date: updateDate, principal: newPrincipal, event: 'Account Updated' });
                 saveDebts(debts);
                 renderDebtAccounts();
             }
