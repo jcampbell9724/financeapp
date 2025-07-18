@@ -12,3 +12,26 @@
     text-align: center;
     border-radius: 4px;
 }
+
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.summary-table th,
+.summary-table td {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    text-align: right;
+}
+
+.summary-table th:first-child,
+.summary-table td:first-child {
+    text-align: left;
+}
+
+.summary-table .subtotal td {
+    font-weight: bold;
+    background: var(--highlight-color);
+}

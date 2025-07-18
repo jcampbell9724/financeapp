@@ -2,7 +2,7 @@ function setupFinancialSummary() {
     const assets = JSON.parse(localStorage.getItem('assets')) || [];
     const debts = JSON.parse(localStorage.getItem('debts')) || [];
 
-    const totalAssets = assets.reduce((sum, a) => sum + parseFloat(a.value || 0), 0);
+    const totalAssets = assets.reduce((sum, a) => sum + parseFloat(a.principal || a.value || 0), 0);
     const totalDebt = debts.reduce((sum, d) => sum + parseFloat(d.principal || 0), 0);
     const netWorth = totalAssets - totalDebt;
 
@@ -34,6 +34,64 @@ function setupFinancialSummary() {
     }
     document.getElementById('asset-change').textContent = `Assets MoM: ${assetChange}`;
     document.getElementById('debt-change').textContent = `Debt MoM: ${debtChange}`;
+
+    const monthSet = new Set();
+    assets.forEach(a => Object.keys(a.monthlyBalances || {}).forEach(m => monthSet.add(m)));
+    debts.forEach(d => Object.keys(d.monthlyBalances || {}).forEach(m => monthSet.add(m)));
+    snapshots.forEach(s => monthSet.add(s.month));
+    const months = Array.from(monthSet).sort();
+
+    const table = document.getElementById('summary-table');
+    table.innerHTML = '';
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    headerRow.innerHTML = '<th>Account</th>' + months.map(m => `<th>${m}</th>`).join('');
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+
+    assets.forEach(asset => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${asset.name}</td>` +
+            months.map(m => {
+                const val = asset.monthlyBalances && asset.monthlyBalances[m];
+                return `<td>${val !== undefined ? '$' + parseFloat(val).toFixed(2) : '-'}</td>`;
+            }).join('');
+        tbody.appendChild(row);
+    });
+
+    const assetTotals = months.map(m => assets.reduce((sum, a) => sum + parseFloat((a.monthlyBalances && a.monthlyBalances[m]) || 0), 0));
+    const assetTotalRow = document.createElement('tr');
+    assetTotalRow.className = 'subtotal';
+    assetTotalRow.innerHTML = '<td><strong>Total Assets</strong></td>' +
+        assetTotals.map(v => `<td><strong>$${v.toFixed(2)}</strong></td>`).join('');
+    tbody.appendChild(assetTotalRow);
+
+    debts.forEach(debt => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${debt.name}</td>` +
+            months.map(m => {
+                const val = debt.monthlyBalances && debt.monthlyBalances[m];
+                return `<td>${val !== undefined ? '$' + parseFloat(val).toFixed(2) : '-'}</td>`;
+            }).join('');
+        tbody.appendChild(row);
+    });
+
+    const debtTotals = months.map(m => debts.reduce((sum, d) => sum + parseFloat((d.monthlyBalances && d.monthlyBalances[m]) || 0), 0));
+    const debtTotalRow = document.createElement('tr');
+    debtTotalRow.className = 'subtotal';
+    debtTotalRow.innerHTML = '<td><strong>Total Debt</strong></td>' +
+        debtTotals.map(v => `<td><strong>$${v.toFixed(2)}</strong></td>`).join('');
+    tbody.appendChild(debtTotalRow);
+
+    const netWorthRow = document.createElement('tr');
+    netWorthRow.innerHTML = '<td><strong>Net Worth</strong></td>' +
+        months.map((_, i) => `<td><strong>$${(assetTotals[i] - debtTotals[i]).toFixed(2)}</strong></td>`).join('');
+    tbody.appendChild(netWorthRow);
+
+    table.appendChild(tbody);
 
     const ctx = document.getElementById('summary-chart');
     const labels = snapshots.map(s => s.month);
