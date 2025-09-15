@@ -101,3 +101,59 @@ body {
     font-weight: bold;
     cursor: pointer;
 }
+
+/* Shared form styles */
+.form-grid {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--surface-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--surface-color);
+    color: #000;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.button:hover {
+    background-color: var(--highlight-color);
+}
+
+.button-block {
+    display: block;
+    width: 100%;
+}
+
+.primary-button {
+    background-color: var(--highlight-color);
+    color: #000;
+}
+
+.primary-button:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+.secondary-button {
+    background-color: var(--surface-color);
+}
+
+.secondary-button:hover {
+    background-color: var(--highlight-color);
+}

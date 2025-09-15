@@ -4,14 +4,14 @@
 
 <form id="cc-position-form" class="cc-position-form">
     <div class="form-grid">
-        <input type="text" id="cc-ticker" placeholder="Ticker" required>
-        <input type="number" id="cc-basis" placeholder="Total Basis ($)" step="0.01" required>
-        <input type="number" id="cc-shares" placeholder="Shares Held" required>
-        <input type="number" id="cc-strike" placeholder="Call Strike ($)" step="0.01">
-        <input type="number" id="cc-premium" placeholder="Call Premium ($)" step="0.01">
-        <input type="date" id="cc-expiry">
+        <input class="form-input" type="text" id="cc-ticker" placeholder="Ticker" required>
+        <input class="form-input" type="number" id="cc-basis" placeholder="Total Basis ($)" step="0.01" required>
+        <input class="form-input" type="number" id="cc-shares" placeholder="Shares Held" required>
+        <input class="form-input" type="number" id="cc-strike" placeholder="Call Strike ($)" step="0.01">
+        <input class="form-input" type="number" id="cc-premium" placeholder="Call Premium ($)" step="0.01">
+        <input class="form-input" type="date" id="cc-expiry">
     </div>
-    <button type="submit">Add Position</button>
+    <button class="button primary-button button-block" type="submit">Add Position</button>
 </form>
 
 <div id="cc-position-list" class="cc-position-list scrollable">
