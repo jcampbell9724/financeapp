@@ -16,38 +16,8 @@
     font-family: Arial, sans-serif;
 }
 
-.form-grid {
-    display: grid;
+.asset-form .form-grid {
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.asset-form input,
-.asset-form select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--surface-color);
-    box-sizing: border-box; /* Important for padding */
-}
-
-.asset-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: var(--highlight-color);
-    color: #000;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.2s;
-}
-
-.asset-form button:hover {
-    background-color: var(--accent-color);
-    color: #fff;
 }
 
 .asset-divider {
@@ -124,18 +94,13 @@
     margin-top: 10px;
 }
 
-.asset-account__edit-form input,
-.asset-account__edit-form select,
-.asset-account__edit-form button {
+.asset-account__edit-form .form-input,
+.asset-account__edit-form .button {
     padding: 8px;
-    border: 1px solid var(--border-color);
-    background: var(--surface-color);
-    border-radius: 4px;
 }
 
-.asset-account__edit-form button {
-    cursor: pointer;
-    border-radius: 4px;
+.asset-account__edit-form .primary-button {
+    width: auto;
 }
 
 .asset-account--stale {

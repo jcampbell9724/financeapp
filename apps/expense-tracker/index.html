@@ -4,16 +4,16 @@
 
 <form id="expense-form" class="expense-form">
     <div class="form-grid">
-        <input type="text" id="expense-desc" placeholder="Description" required>
-        <input type="number" id="expense-amount" placeholder="Amount ($)" step="0.01" required>
-        <select id="expense-category">
+        <input class="form-input" type="text" id="expense-desc" placeholder="Description" required>
+        <input class="form-input" type="number" id="expense-amount" placeholder="Amount ($)" step="0.01" required>
+        <select class="form-input" id="expense-category">
             <option value="General">General</option>
             <option value="Food">Food</option>
             <option value="Utilities">Utilities</option>
             <option value="Entertainment">Entertainment</option>
         </select>
     </div>
-    <button type="submit">Add Expense</button>
+    <button class="button primary-button button-block" type="submit">Add Expense</button>
 </form>
 
 <div id="expense-list" class="expense-list scrollable">

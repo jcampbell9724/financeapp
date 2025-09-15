@@ -16,37 +16,8 @@
     font-family: Arial, sans-serif;
 }
 
-.form-grid {
-    display: grid;
+.debt-form .form-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.debt-form input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--surface-color);
-    box-sizing: border-box; /* Important for padding */
-}
-
-.debt-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: var(--highlight-color);
-    color: #000;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.2s;
-}
-
-.debt-form button:hover {
-    background-color: var(--accent-color);
-    color: #fff;
 }
 
 .debt-divider {
@@ -123,17 +94,13 @@
     margin-top: 10px;
 }
 
-.debt-account__edit-form input,
-.debt-account__edit-form button {
+.debt-account__edit-form .form-input,
+.debt-account__edit-form .button {
     padding: 8px;
-    border: 1px solid var(--border-color);
-    background: var(--surface-color);
-    border-radius: 4px;
 }
 
-.debt-account__edit-form button {
-    cursor: pointer;
-    border-radius: 4px;
+.debt-account__edit-form .primary-button {
+    width: auto;
 }
 
 .debt-account--stale {

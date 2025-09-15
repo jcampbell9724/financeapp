@@ -53,11 +53,11 @@ function setupCoveredCallTracker() {
 
             const addCallForm = p.salePrice === undefined ? `
                 <form class="cc-add-call-form">
-                    <input type="number" class="cc-call-strike" placeholder="Strike" step="0.01" required>
-                    <input type="number" class="cc-call-premium" placeholder="Premium" step="0.01" required>
-                    <input type="date" class="cc-call-expiry" required>
-                    <button type="submit">Save</button>
-                    <button type="button" class="cancel-add-call-btn">Cancel</button>
+                    <input class="form-input cc-call-strike" type="number" placeholder="Strike" step="0.01" required>
+                    <input class="form-input cc-call-premium" type="number" placeholder="Premium" step="0.01" required>
+                    <input class="form-input cc-call-expiry" type="date" required>
+                    <button class="button primary-button" type="submit">Save</button>
+                    <button class="button secondary-button cancel-add-call-btn" type="button">Cancel</button>
                 </form>
             ` : '';
 
