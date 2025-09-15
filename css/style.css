@@ -65,6 +65,12 @@ body {
     text-transform: uppercase;
 }
 
+/* Utility classes */
+.scrollable {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
 /* Modal Styles */
 .modal-overlay {
     position: fixed;
