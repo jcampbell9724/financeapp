@@ -210,8 +210,3 @@
     border-bottom: none;
 }
 
-/* Allow sections marked as scrollable to scroll independently */
-.scrollable {
-    max-height: 400px;
-    overflow-y: auto;
-}
