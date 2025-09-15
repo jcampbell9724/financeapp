@@ -11,18 +11,6 @@
     border-radius: 6px;
 }
 
-.toggle-add-form-btn {
-    background: var(--highlight-color);
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    transition: background-color 0.2s;
-    border-radius: 4px;
-}
-
-.toggle-add-form-btn:hover {
-    background: var(--accent-color);
-    color: #fff;
-}
 .debt-form {
     margin-bottom: 20px;
     font-family: Arial, sans-serif;
