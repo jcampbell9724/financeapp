@@ -70,6 +70,10 @@ function setupAssetTracker(sharedData) {
             accountCard.className = 'asset-account';
             accountCard.dataset.id = asset.id;
 
+            const monthlyBalanceEntries = Object.entries(asset.monthlyBalances || {}).sort(
+                ([a], [b]) => a.localeCompare(b)
+            );
+
             // Check if the account is stale (not updated in over a month)
             const lastUpdated = new Date(asset.lastUpdated);
             const oneMonthAgo = new Date();
@@ -91,7 +95,7 @@ function setupAssetTracker(sharedData) {
                 <div class="asset-account__monthly-balances">
                     <h4>Monthly Balances</h4>
                     <ul class="asset-account__monthly-list">
-                        ${Object.entries(asset.monthlyBalances || {}).map(([m, v]) => `
+                        ${monthlyBalanceEntries.map(([m, v]) => `
                             <li class="asset-account__monthly-item">${m}: $${v.toFixed(2)}</li>
                         `).join('')}
                     </ul>
