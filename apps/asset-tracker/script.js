@@ -1,4 +1,4 @@
-import { loadJSON, saveJSON } from '../../js/utils/storage.js';
+import { ensureAssetsHavePrincipal, loadJSON, saveJSON } from '../../js/utils/storage.js';
 
 // --- ASSET TRACKER LOGIC ---
 function setupAssetTracker(sharedData) {
@@ -53,12 +53,19 @@ function setupAssetTracker(sharedData) {
 
     // Function to load assets from localStorage
     function loadAssets() {
-        return loadJSON('assets', []);
+        const storedAssets = loadJSON('assets', []);
+        const { assets: normalizedAssets, migrated } = ensureAssetsHavePrincipal(storedAssets);
+        if (migrated) {
+            saveJSON('assets', normalizedAssets);
+        }
+        return normalizedAssets;
     }
 
     // Function to save assets to localStorage
     function saveAssets(assetsToSave) {
-        saveJSON('assets', assetsToSave);
+        const { assets: normalizedAssets } = ensureAssetsHavePrincipal(assetsToSave);
+        assets = normalizedAssets;
+        saveJSON('assets', normalizedAssets);
     }
 
     // Function to render the asset accounts

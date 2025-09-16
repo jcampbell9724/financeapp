@@ -1,10 +1,17 @@
-import { loadJSON, saveJSON } from '../../js/utils/storage.js';
+import { ensureAssetsHavePrincipal, loadJSON, saveJSON } from '../../js/utils/storage.js';
 
 function setupFinancialSummary() {
-    const assets = loadJSON('assets', []);
+    const rawAssets = loadJSON('assets', []);
+    const { assets, migrated } = ensureAssetsHavePrincipal(rawAssets);
+    if (migrated) {
+        saveJSON('assets', assets);
+    }
     const debts = loadJSON('debts', []);
 
-    const totalAssets = assets.reduce((sum, a) => sum + parseFloat(a.principal || a.value || 0), 0);
+    const totalAssets = assets.reduce((sum, asset) => {
+        const principal = typeof asset.principal === 'number' ? asset.principal : parseFloat(asset.principal);
+        return sum + (Number.isFinite(principal) ? principal : 0);
+    }, 0);
     const totalDebt = debts.reduce((sum, d) => sum + parseFloat(d.principal || 0), 0);
     const netWorth = totalAssets - totalDebt;
 
