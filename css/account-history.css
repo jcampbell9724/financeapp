@@ -55,3 +55,14 @@
     padding: 4px;
     text-align: center;
 }
+
+.account-history__monthly-table th:first-child,
+.account-history__monthly-table td:first-child {
+    text-align: left;
+}
+
+.account-history__monthly-table th:last-child,
+.account-history__monthly-table td:last-child {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
