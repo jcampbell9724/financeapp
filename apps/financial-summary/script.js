@@ -100,30 +100,57 @@ function setupFinancialSummary() {
     const assetData = snapshots.map(s => s.totalAssets);
     const debtData = snapshots.map(s => s.totalDebt);
 
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Assets',
-                    data: assetData,
-                    borderColor: 'green',
-                    fill: false
-                },
-                {
-                    label: 'Debt',
-                    data: debtData,
-                    borderColor: 'red',
-                    fill: false
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });
+    loadChartJs()
+        .then(ChartConstructor => {
+            if (!ctx) {
+                return;
+            }
+
+            const ChartJs = ChartConstructor || window.Chart;
+            if (!ChartJs) {
+                throw new Error('Chart constructor is unavailable after loading.');
+            }
+
+            const existingError = document.getElementById('summary-chart-error');
+            if (existingError) {
+                existingError.remove();
+            }
+            ctx.style.display = '';
+
+            try {
+                new ChartJs(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Assets',
+                                data: assetData,
+                                borderColor: 'green',
+                                fill: false
+                            },
+                            {
+                                label: 'Debt',
+                                data: debtData,
+                                borderColor: 'red',
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            } catch (error) {
+                console.error('Failed to render financial summary chart.', error);
+                displayChartError('Chart is unavailable right now.');
+            }
+        })
+        .catch(error => {
+            console.error('Failed to load Chart.js for financial summary.', error);
+            displayChartError('Chart is unavailable right now.');
+        });
 }
 
 if (typeof window.setupFinancialSummary !== 'function') {

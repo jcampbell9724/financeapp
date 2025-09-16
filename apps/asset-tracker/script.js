@@ -97,17 +97,17 @@ function setupAssetTracker(sharedData) {
                     </ul>
                 </div>
                 <form class="asset-account__edit-form" style="display:none">
-                    <input type="text" class="edit-asset-name" value="${asset.name}" required>
-                    <input type="number" class="edit-asset-principal" value="${asset.principal}" step="0.01" required>
-                    <input type="month" class="edit-asset-month" value="${new Date().toISOString().slice(0,7)}" required>
-                    <select class="edit-asset-category">
+                    <input class="form-input edit-asset-name" type="text" value="${asset.name}" required>
+                    <input class="form-input edit-asset-principal" type="number" value="${asset.principal}" step="0.01" required>
+                    <input class="form-input edit-asset-month" type="month" value="${new Date().toISOString().slice(0,7)}" required>
+                    <select class="form-input edit-asset-category">
                         <option value="Cash" ${asset.category === 'Cash' ? 'selected' : ''}>Cash</option>
                         <option value="Investment" ${asset.category === 'Investment' ? 'selected' : ''}>Investment</option>
                         <option value="Retirement" ${asset.category === 'Retirement' ? 'selected' : ''}>Retirement</option>
                         <option value="Other" ${asset.category === 'Other' ? 'selected' : ''}>Other</option>
                     </select>
-                    <button type="submit" class="save-asset-btn">Save</button>
-                    <button type="button" class="cancel-edit-btn">Cancel</button>
+                    <button class="button primary-button save-asset-btn" type="submit">Save</button>
+                    <button class="button secondary-button cancel-edit-btn" type="button">Cancel</button>
                 </form>
                 <div class="asset-account__history">
                     <h4>Update History</h4>

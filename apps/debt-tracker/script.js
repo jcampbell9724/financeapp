@@ -159,13 +159,13 @@ function setupDebtTracker(sharedData) {
                     </table>
                 </div>
                 <form class="debt-account__edit-form" style="display:none">
-                    <input type="text" class="edit-debt-name" value="${debt.name}" required>
-                    <input type="number" class="edit-debt-principal" value="${debt.principal}" step="0.01" required>
-                    <input type="month" class="edit-debt-month" value="${new Date().toISOString().slice(0,7)}" required>
-                    <input type="number" class="edit-debt-payment" value="${debt.payment}" step="0.01" required>
-                    <input type="number" class="edit-debt-rate" value="${debt.rate}" step="0.01" required>
-                    <button type="submit" class="save-debt-btn">Save</button>
-                    <button type="button" class="cancel-edit-btn">Cancel</button>
+                    <input class="form-input edit-debt-name" type="text" value="${debt.name}" required>
+                    <input class="form-input edit-debt-principal" type="number" value="${debt.principal}" step="0.01" required>
+                    <input class="form-input edit-debt-month" type="month" value="${new Date().toISOString().slice(0,7)}" required>
+                    <input class="form-input edit-debt-payment" type="number" value="${debt.payment}" step="0.01" required>
+                    <input class="form-input edit-debt-rate" type="number" value="${debt.rate}" step="0.01" required>
+                    <button class="button primary-button save-debt-btn" type="submit">Save</button>
+                    <button class="button secondary-button cancel-edit-btn" type="button">Cancel</button>
                 </form>
                 <div class="debt-account__history">
                     <h4>Update History</h4>

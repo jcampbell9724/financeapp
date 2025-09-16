@@ -6,16 +6,16 @@
 <div id="add-asset-form-container" class="add-asset-form-container" style="display: none;">
     <form id="asset-form" class="asset-form">
         <div class="form-grid">
-            <input type="text" id="asset-name" placeholder="Account Name (e.g., Savings Account)" required>
-            <input type="number" id="asset-principal" placeholder="Current Value ($)" required step="0.01">
-            <select id="asset-category">
+            <input class="form-input" type="text" id="asset-name" placeholder="Account Name (e.g., Savings Account)" required>
+            <input class="form-input" type="number" id="asset-principal" placeholder="Current Value ($)" required step="0.01">
+            <select class="form-input" id="asset-category">
                 <option value="Cash">Cash</option>
                 <option value="Investment">Investment</option>
                 <option value="Retirement">Retirement</option>
                 <option value="Other">Other</option>
             </select>
         </div>
-        <button type="submit">Add Account</button>
+        <button class="button primary-button button-block" type="submit">Add Account</button>
     </form>
 </div>
 
