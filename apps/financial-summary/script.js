@@ -1,58 +1,8 @@
-let chartJsLoadPromise = null;
-
-function loadChartJs() {
-    if (window.Chart) {
-        return Promise.resolve(window.Chart);
-    }
-
-    if (chartJsLoadPromise) {
-        return chartJsLoadPromise;
-    }
-
-    chartJsLoadPromise = new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-        script.async = true;
-        script.onload = () => {
-            if (window.Chart) {
-                resolve(window.Chart);
-            } else {
-                chartJsLoadPromise = null;
-                reject(new Error('Chart.js loaded but Chart is unavailable.'));
-            }
-        };
-        script.onerror = () => {
-            chartJsLoadPromise = null;
-            script.remove();
-            reject(new Error('Failed to load Chart.js.'));
-        };
-        document.head.appendChild(script);
-    });
-
-    return chartJsLoadPromise;
-}
-
-function displayChartError(message) {
-    const canvas = document.getElementById('summary-chart');
-    if (!canvas) {
-        return;
-    }
-
-    canvas.style.display = 'none';
-
-    let errorContainer = document.getElementById('summary-chart-error');
-    if (!errorContainer) {
-        errorContainer = document.createElement('div');
-        errorContainer.id = 'summary-chart-error';
-        errorContainer.className = 'chart-error';
-        canvas.insertAdjacentElement('afterend', errorContainer);
-    }
-    errorContainer.textContent = message;
-}
+import { loadJSON, saveJSON } from '../../js/utils/storage.js';
 
 function setupFinancialSummary() {
-    const assets = JSON.parse(localStorage.getItem('assets')) || [];
-    const debts = JSON.parse(localStorage.getItem('debts')) || [];
+    const assets = loadJSON('assets', []);
+    const debts = loadJSON('debts', []);
 
     const totalAssets = assets.reduce((sum, a) => sum + parseFloat(a.principal || a.value || 0), 0);
     const totalDebt = debts.reduce((sum, d) => sum + parseFloat(d.principal || 0), 0);
@@ -63,7 +13,7 @@ function setupFinancialSummary() {
     document.getElementById('net-worth').textContent = `Net Worth: $${netWorth.toFixed(2)}`;
 
     const currentMonth = new Date().toISOString().slice(0, 7);
-    let snapshots = JSON.parse(localStorage.getItem('financialSnapshots')) || [];
+    let snapshots = loadJSON('financialSnapshots', []);
     const existing = snapshots.find(s => s.month === currentMonth);
     if (existing) {
         existing.totalAssets = totalAssets;
@@ -71,7 +21,7 @@ function setupFinancialSummary() {
     } else {
         snapshots.push({ month: currentMonth, totalAssets, totalDebt });
     }
-    localStorage.setItem('financialSnapshots', JSON.stringify(snapshots));
+    saveJSON('financialSnapshots', snapshots);
 
     let assetChange = 'N/A';
     let debtChange = 'N/A';

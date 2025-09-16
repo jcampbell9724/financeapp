@@ -1,3 +1,5 @@
+import { loadJSON, saveJSON } from '../../js/utils/storage.js';
+
 // --- DEBT TRACKER LOGIC ---
 function setupDebtTracker(sharedData) {
     console.log('Setting up Debt Tracker...');
@@ -52,21 +54,12 @@ function setupDebtTracker(sharedData) {
 
     // Function to load debts from localStorage
     function loadDebts() {
-        const stored = localStorage.getItem('debts');
-        if (!stored) {
-            return [];
-        }
-        try {
-            return JSON.parse(stored);
-        } catch (e) {
-            console.error('Error parsing debts from localStorage', e);
-            return [];
-        }
+        return loadJSON('debts', []);
     }
 
     // Function to save debts to localStorage
     function saveDebts(debtsToSave) {
-        localStorage.setItem('debts', JSON.stringify(debtsToSave));
+        saveJSON('debts', debtsToSave);
     }
 
     // Function to calculate debt metrics

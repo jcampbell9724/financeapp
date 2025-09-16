@@ -1,14 +1,16 @@
+import { loadJSON, saveJSON } from '../../js/utils/storage.js';
+
 function setupExpenseTracker() {
     const expenseForm = document.getElementById('expense-form');
     const expenseList = document.getElementById('expense-list');
     let expenses = loadExpenses();
 
     function loadExpenses() {
-        return JSON.parse(localStorage.getItem('expenses')) || [];
+        return loadJSON('expenses', []);
     }
 
     function saveExpenses(data) {
-        localStorage.setItem('expenses', JSON.stringify(data));
+        saveJSON('expenses', data);
     }
 
     function renderExpenses() {

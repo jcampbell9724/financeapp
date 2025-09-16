@@ -1,14 +1,16 @@
+import { loadJSON, saveJSON } from '../../js/utils/storage.js';
+
 function setupCoveredCallTracker() {
     const positionForm = document.getElementById('cc-position-form');
     const positionList = document.getElementById('cc-position-list');
     let positions = loadPositions();
 
     function loadPositions() {
-        return JSON.parse(localStorage.getItem('coveredCallPositions')) || [];
+        return loadJSON('coveredCallPositions', []);
     }
 
     function savePositions(newPositions) {
-        localStorage.setItem('coveredCallPositions', JSON.stringify(newPositions));
+        saveJSON('coveredCallPositions', newPositions);
     }
 
     function calculateMetrics(position) {

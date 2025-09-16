@@ -1,3 +1,5 @@
+import { loadJSON, saveJSON } from './utils/storage.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const appContainer = document.getElementById('app-container');
     const modalOverlay = document.getElementById('modal-overlay');
@@ -78,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const script = document.createElement('script');
             script.id = `script-${app.id}`;
             script.defer = true;
+            script.type = 'module';
 
             // IMPORTANT: Set onload BEFORE src to prevent race conditions.
             script.onload = () => {
@@ -120,21 +123,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveTileOrder = () => {
         const ids = Array.from(appContainer.querySelectorAll('.app-tile'))
             .map(tile => tile.dataset.id);
-        localStorage.setItem('appOrder', JSON.stringify(ids));
+        saveJSON('appOrder', ids);
     };
 
     const loadTileOrder = () => {
-        const stored = localStorage.getItem('appOrder');
-        if (!stored) return;
-        try {
-            const ids = JSON.parse(stored);
-            ids.forEach(id => {
-                const tile = appContainer.querySelector(`[data-id="${id}"]`);
-                if (tile) appContainer.appendChild(tile);
-            });
-        } catch (e) {
-            console.error('Failed to parse app order', e);
+        const ids = loadJSON('appOrder', []);
+        if (!Array.isArray(ids)) {
+            return;
         }
+        ids.forEach(id => {
+            const tile = appContainer.querySelector(`[data-id="${id}"]`);
+            if (tile) appContainer.appendChild(tile);
+        });
     };
 
     const getDragAfterElement = (container, y) => {
