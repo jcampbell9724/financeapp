@@ -1,6 +1,8 @@
+import { loadJSON, saveJSON } from '../../js/utils/storage.js';
+
 function setupFinancialSummary() {
-    const assets = JSON.parse(localStorage.getItem('assets')) || [];
-    const debts = JSON.parse(localStorage.getItem('debts')) || [];
+    const assets = loadJSON('assets', []);
+    const debts = loadJSON('debts', []);
 
     const totalAssets = assets.reduce((sum, a) => sum + parseFloat(a.principal || a.value || 0), 0);
     const totalDebt = debts.reduce((sum, d) => sum + parseFloat(d.principal || 0), 0);
@@ -11,7 +13,7 @@ function setupFinancialSummary() {
     document.getElementById('net-worth').textContent = `Net Worth: $${netWorth.toFixed(2)}`;
 
     const currentMonth = new Date().toISOString().slice(0, 7);
-    let snapshots = JSON.parse(localStorage.getItem('financialSnapshots')) || [];
+    let snapshots = loadJSON('financialSnapshots', []);
     const existing = snapshots.find(s => s.month === currentMonth);
     if (existing) {
         existing.totalAssets = totalAssets;
@@ -19,7 +21,7 @@ function setupFinancialSummary() {
     } else {
         snapshots.push({ month: currentMonth, totalAssets, totalDebt });
     }
-    localStorage.setItem('financialSnapshots', JSON.stringify(snapshots));
+    saveJSON('financialSnapshots', snapshots);
 
     let assetChange = 'N/A';
     let debtChange = 'N/A';

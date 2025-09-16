@@ -1,3 +1,5 @@
+import { loadJSON, saveJSON } from '../../js/utils/storage.js';
+
 // --- ASSET TRACKER LOGIC ---
 function setupAssetTracker(sharedData) {
     console.log('Setting up Asset Tracker...');
@@ -51,21 +53,12 @@ function setupAssetTracker(sharedData) {
 
     // Function to load assets from localStorage
     function loadAssets() {
-        const stored = localStorage.getItem('assets');
-        if (!stored) {
-            return [];
-        }
-        try {
-            return JSON.parse(stored);
-        } catch (e) {
-            console.error('Error parsing assets from localStorage', e);
-            return [];
-        }
+        return loadJSON('assets', []);
     }
 
     // Function to save assets to localStorage
     function saveAssets(assetsToSave) {
-        localStorage.setItem('assets', JSON.stringify(assetsToSave));
+        saveJSON('assets', assetsToSave);
     }
 
     // Function to render the asset accounts

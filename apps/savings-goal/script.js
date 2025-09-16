@@ -1,3 +1,5 @@
+import { loadJSON, saveJSON } from '../../js/utils/storage.js';
+
 function setupSavingsGoal() {
     const goalForm = document.getElementById('goal-form');
     const contributionForm = document.getElementById('contribution-form');
@@ -5,11 +7,11 @@ function setupSavingsGoal() {
     let goalData = loadGoal();
 
     function loadGoal() {
-        return JSON.parse(localStorage.getItem('savingsGoal')) || { goal: 0, saved: 0 };
+        return loadJSON('savingsGoal', { goal: 0, saved: 0 });
     }
 
     function saveGoal(data) {
-        localStorage.setItem('savingsGoal', JSON.stringify(data));
+        saveJSON('savingsGoal', data);
     }
 
     function renderProgress() {

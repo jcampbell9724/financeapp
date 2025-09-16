@@ -1,14 +1,16 @@
+import { loadJSON, saveJSON } from '../../js/utils/storage.js';
+
 function setupBudgetPlanner() {
     const budgetForm = document.getElementById('budget-form');
     const budgetList = document.getElementById('budget-list');
     let budgets = loadBudgets();
 
     function loadBudgets() {
-        return JSON.parse(localStorage.getItem('budgets')) || [];
+        return loadJSON('budgets', []);
     }
 
     function saveBudgets(newBudgets) {
-        localStorage.setItem('budgets', JSON.stringify(newBudgets));
+        saveJSON('budgets', newBudgets);
     }
 
     function renderBudgets() {
