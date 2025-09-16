@@ -1,7 +1,7 @@
 import { loadJSON, saveJSON } from '../../js/utils/storage.js';
 
 // --- ASSET TRACKER LOGIC ---
-function setupAssetTracker(sharedData) {
+export function setupAssetTracker(sharedData) {
     console.log('Setting up Asset Tracker...');
     const assetForm = document.getElementById('asset-form');
     const assetAccountsContainer = document.getElementById('asset-accounts-container');
@@ -213,10 +213,5 @@ function setupAssetTracker(sharedData) {
 
     // Initial render
     renderAssetAccounts();
-}
-
-// Check if the function is already defined to avoid re-running on script load
-if (typeof window.setupAssetTracker !== 'function') {
-    window.setupAssetTracker = setupAssetTracker;
 }
 
