@@ -53,7 +53,12 @@ export function setupAssetTracker(sharedData) {
 
     // Function to load assets from localStorage
     function loadAssets() {
-        return loadJSON('assets', []);
+        const storedAssets = loadJSON('assets', []);
+        if (!Array.isArray(storedAssets)) {
+            console.warn('Expected assets data to be an array, resetting to empty list.', storedAssets);
+            return [];
+        }
+        return storedAssets;
     }
 
     // Function to save assets to localStorage
@@ -69,6 +74,10 @@ export function setupAssetTracker(sharedData) {
             const accountCard = document.createElement('div');
             accountCard.className = 'asset-account';
             accountCard.dataset.id = asset.id;
+
+            const monthlyBalanceEntries = Object.entries(asset.monthlyBalances || {}).sort(
+                ([a], [b]) => a.localeCompare(b)
+            );
 
             // Check if the account is stale (not updated in over a month)
             const lastUpdated = new Date(asset.lastUpdated);
@@ -91,7 +100,7 @@ export function setupAssetTracker(sharedData) {
                 <div class="asset-account__monthly-balances">
                     <h4>Monthly Balances</h4>
                     <ul class="asset-account__monthly-list">
-                        ${Object.entries(asset.monthlyBalances || {}).map(([m, v]) => `
+                        ${monthlyBalanceEntries.map(([m, v]) => `
                             <li class="asset-account__monthly-item">${m}: $${v.toFixed(2)}</li>
                         `).join('')}
                     </ul>
@@ -212,6 +221,7 @@ export function setupAssetTracker(sharedData) {
     }
 
     // Initial render
+    assets = loadAssets();
     renderAssetAccounts();
 }
 
