@@ -190,4 +190,65 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    const themeStorageKey = 'preferredTheme';
+    const themeToggle = document.getElementById('theme-toggle');
+    const validTheme = (theme) => theme === 'light' || theme === 'dark';
+
+    const applyTheme = (theme) => {
+        document.body.classList.remove('theme-light', 'theme-dark');
+        if (validTheme(theme)) {
+            document.body.classList.add(`theme-${theme}`);
+        }
+    };
+
+    const systemPrefersDark = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const getActiveTheme = () => {
+        if (document.body.classList.contains('theme-dark')) {
+            return 'dark';
+        }
+        if (document.body.classList.contains('theme-light')) {
+            return 'light';
+        }
+        return systemPrefersDark() ? 'dark' : 'light';
+    };
+
+    const updateToggleLabel = () => {
+        if (!themeToggle) {
+            return;
+        }
+        const activeTheme = getActiveTheme();
+        const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+        themeToggle.textContent = nextTheme === 'dark' ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+        themeToggle.setAttribute('aria-pressed', activeTheme === 'dark' ? 'true' : 'false');
+    };
+
+    const storedTheme = loadJSON(themeStorageKey, null);
+    if (validTheme(storedTheme)) {
+        applyTheme(storedTheme);
+    }
+
+    if (themeToggle) {
+        updateToggleLabel();
+        themeToggle.addEventListener('click', () => {
+            const activeTheme = getActiveTheme();
+            const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(nextTheme);
+            saveJSON(themeStorageKey, nextTheme);
+            updateToggleLabel();
+        });
+    }
+
+    if (!validTheme(storedTheme) && window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = () => {
+            updateToggleLabel();
+        };
+        if (typeof mediaQuery.addEventListener === 'function') {
+            mediaQuery.addEventListener('change', handleChange);
+        } else if (typeof mediaQuery.addListener === 'function') {
+            mediaQuery.addListener(handleChange);
+        }
+    }
 });
