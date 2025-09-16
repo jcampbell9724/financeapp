@@ -105,9 +105,9 @@ body {
     box-shadow: var(--shadow);
     border-radius: 8px;
     position: relative;
-    min-width: 400px;
-    width: 90%;
-    height: 90%;
+    width: min(90vw, 600px);
+    max-width: 600px;
+    max-height: 90vh;
     resize: both;
     overflow: auto;
 }
