@@ -1,3 +1,5 @@
+@import url("../../css/account-history.css");
+
 /* Debt Tracker Styles */
 .debt-tracker-header {
     display: flex;
@@ -105,63 +107,5 @@
 
 .debt-account--stale {
     border-left: 5px solid #f44336; /* Red flag for stale accounts */
-}
-
-.debt-account__history {
-    display: none; /* Hidden by default */
-    margin-top: 15px;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
-}
-
-.debt-account__history h4 {
-    margin-bottom: 10px;
-}
-
-.debt-account__history-list {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.debt-account__history-item {
-    font-size: 14px;
-    padding: 5px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.debt-account__history-item:last-child {
-    border-bottom: none;
-}
-
-.debt-account__monthly-balances {
-    margin-top: 10px;
-}
-
-.debt-account__monthly-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-}
-
-.debt-account__monthly-table th,
-.debt-account__monthly-table td {
-    border: 1px solid var(--border-color);
-    padding: 4px;
-    text-align: center;
-}
-
-.debt-account__monthly-list {
-    list-style-type: none;
-    padding-left: 0;
-    font-size: 12px;
-}
-
-.debt-account__monthly-item {
-    padding: 3px 0;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.debt-account__monthly-item:last-child {
-    border-bottom: none;
 }
 

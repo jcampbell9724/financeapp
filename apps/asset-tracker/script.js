@@ -99,11 +99,11 @@ export function setupAssetTracker(sharedData) {
                 </div>
                 <p><strong>Principal:</strong> $${asset.principal.toFixed(2)}</p>
                 <p><strong>Category:</strong> ${asset.category}</p>
-                <div class="asset-account__monthly-balances">
+                <div class="asset-account__monthly-balances account-history__monthly">
                     <h4>Monthly Balances</h4>
-                    <ul class="asset-account__monthly-list">
+                    <ul class="asset-account__monthly-list account-history__monthly-list">
                         ${monthlyBalanceEntries.map(([m, v]) => `
-                            <li class="asset-account__monthly-item">${m}: $${v.toFixed(2)}</li>
+                            <li class="asset-account__monthly-item account-history__monthly-item">${m}: $${v.toFixed(2)}</li>
                         `).join('')}
                     </ul>
                 </div>
@@ -120,26 +120,15 @@ export function setupAssetTracker(sharedData) {
                     <button class="button primary-button save-asset-btn" type="submit">Save</button>
                     <button class="button secondary-button cancel-edit-btn" type="button">Cancel</button>
                 </form>
-                <div class="asset-account__history">
+                <div class="asset-account__history account-history">
                     <h4>Update History</h4>
-                    <table class="asset-account__history-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Event</th>
-                                <th>Principal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${asset.history.map(entry => `
-                                <tr>
-                                    <td>${new Date(entry.date).toLocaleDateString()}</td>
-                                    <td>${entry.event}</td>
-                                    <td>$${entry.principal.toFixed(2)}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
+                    <ul class="asset-account__history-list account-history__list">
+                        ${asset.history.map(entry => `
+                            <li class="asset-account__history-item account-history__item">
+                                ${new Date(entry.date).toLocaleDateString()}: ${entry.event} - $${entry.principal.toFixed(2)}
+                            </li>
+                        `).join('')}
+                    </ul>
                 </div>
             `;
             assetAccountsContainer.appendChild(accountCard);
