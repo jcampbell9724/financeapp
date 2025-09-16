@@ -35,6 +35,9 @@
     border-radius: 4px;
     padding: 15px;
     margin-bottom: 15px;
+    resize: vertical;
+    overflow: auto;
+    min-height: 180px;
 }
 
 .asset-account__header {
@@ -52,6 +55,21 @@
     border: 1px solid var(--border-color);
     cursor: pointer;
     border-radius: 4px;
+}
+
+.asset-account__header-actions .toggle-history-btn[aria-expanded="true"] {
+    background-color: var(--highlight-color);
+    color: var(--primary-button-text-color);
+}
+
+.asset-account__empty-state {
+    font-size: 13px;
+    color: #555;
+    margin: 5px 0 0;
+}
+
+.asset-account__monthly-balances table {
+    margin-top: 8px;
 }
 
 .asset-account__name {

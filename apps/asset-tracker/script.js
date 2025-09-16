@@ -68,6 +68,25 @@ export function setupAssetTracker(sharedData) {
         saveJSON('assets', normalizedAssets);
     }
 
+    const formatMonthLabel = (monthKey) => {
+        if (typeof monthKey !== 'string' || !/^\d{4}-\d{2}$/.test(monthKey)) {
+            return monthKey;
+        }
+        const [yearStr, monthStr] = monthKey.split('-');
+        const year = Number(yearStr);
+        const monthIndex = Number(monthStr) - 1;
+        const date = new Date(year, monthIndex);
+        if (Number.isNaN(date.getTime())) {
+            return monthKey;
+        }
+        return date.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+    };
+
+    const formatCurrency = (value) => {
+        const amount = Number(value);
+        return Number.isFinite(amount) ? `$${amount.toFixed(2)}` : '$0.00';
+    };
+
     // Function to render the asset accounts
     function renderAssetAccounts() {
         if (!assetAccountsContainer) return;
@@ -81,6 +100,27 @@ export function setupAssetTracker(sharedData) {
                 ([a], [b]) => a.localeCompare(b)
             );
 
+            const monthlyBalanceTable = monthlyBalanceEntries.length > 0
+                ? `
+                    <table class="account-history__monthly-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Month</th>
+                                <th scope="col">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${monthlyBalanceEntries.map(([m, v]) => `
+                                <tr>
+                                    <td>${formatMonthLabel(m)}</td>
+                                    <td>${formatCurrency(v)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `
+                : '<p class="asset-account__empty-state">No balance history recorded yet.</p>';
+
             // Check if the account is stale (not updated in over a month)
             const lastUpdated = new Date(asset.lastUpdated);
             const oneMonthAgo = new Date();
@@ -93,19 +133,16 @@ export function setupAssetTracker(sharedData) {
                 <div class="asset-account__header">
                     <h3>${asset.name}</h3>
                     <div class="asset-account__header-actions">
-                        <button class="edit-asset-btn">Edit</button>
-                        <button class="delete-asset-btn">×</button>
+                        <button class="toggle-history-btn" type="button" aria-expanded="false">View History</button>
+                        <button class="edit-asset-btn" type="button">Edit</button>
+                        <button class="delete-asset-btn" type="button" aria-label="Delete account">×</button>
                     </div>
                 </div>
-                <p><strong>Principal:</strong> $${asset.principal.toFixed(2)}</p>
+                <p><strong>Principal:</strong> ${formatCurrency(asset.principal)}</p>
                 <p><strong>Category:</strong> ${asset.category}</p>
                 <div class="asset-account__monthly-balances account-history__monthly">
                     <h4>Monthly Balances</h4>
-                    <ul class="asset-account__monthly-list account-history__monthly-list">
-                        ${monthlyBalanceEntries.map(([m, v]) => `
-                            <li class="asset-account__monthly-item account-history__monthly-item">${m}: $${v.toFixed(2)}</li>
-                        `).join('')}
-                    </ul>
+                    ${monthlyBalanceTable}
                 </div>
                 <form class="asset-account__edit-form" style="display:none">
                     <input class="form-input edit-asset-name" type="text" value="${asset.name}" required>
@@ -125,7 +162,7 @@ export function setupAssetTracker(sharedData) {
                     <ul class="asset-account__history-list account-history__list">
                         ${asset.history.map(entry => `
                             <li class="asset-account__history-item account-history__item">
-                                ${new Date(entry.date).toLocaleDateString()}: ${entry.event} - $${entry.principal.toFixed(2)}
+                                ${new Date(entry.date).toLocaleDateString()}: ${entry.event} - ${formatCurrency(entry.principal)}
                             </li>
                         `).join('')}
                     </ul>
@@ -190,12 +227,19 @@ export function setupAssetTracker(sharedData) {
                 return;
             }
 
-            // Handle toggling the history view for the whole card
-            const historyView = card.querySelector('.asset-account__history');
-            if (historyView) {
-                const isVisible = historyView.style.display === 'block';
-                historyView.style.display = isVisible ? 'none' : 'block';
+            if (e.target.classList.contains('toggle-history-btn')) {
+                e.preventDefault();
+                const historyView = card.querySelector('.asset-account__history');
+                if (historyView) {
+                    const isVisible = historyView.style.display === 'block';
+                    historyView.style.display = isVisible ? 'none' : 'block';
+                    e.target.setAttribute('aria-expanded', String(!isVisible));
+                    e.target.textContent = isVisible ? 'View History' : 'Hide History';
+                }
+                return;
             }
+
+            // Handle clicks elsewhere in the card without triggering history toggling
         });
 
         // Handle save on edit form submission
