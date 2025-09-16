@@ -122,13 +122,24 @@ export function setupAssetTracker(sharedData) {
                 </form>
                 <div class="asset-account__history">
                     <h4>Update History</h4>
-                    <ul class="asset-account__history-list">
-                        ${asset.history.map(entry => `
-                            <li class="asset-account__history-item">
-                                ${new Date(entry.date).toLocaleDateString()}: ${entry.event} - $${entry.principal.toFixed(2)}
-                            </li>
-                        `).join('')}
-                    </ul>
+                    <table class="asset-account__history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Event</th>
+                                <th>Principal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${asset.history.map(entry => `
+                                <tr>
+                                    <td>${new Date(entry.date).toLocaleDateString()}</td>
+                                    <td>${entry.event}</td>
+                                    <td>$${entry.principal.toFixed(2)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
                 </div>
             `;
             assetAccountsContainer.appendChild(accountCard);
