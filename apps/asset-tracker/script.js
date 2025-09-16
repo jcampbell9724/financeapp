@@ -1,7 +1,7 @@
 import { loadJSON, saveJSON } from '../../js/utils/storage.js';
 
 // --- ASSET TRACKER LOGIC ---
-function setupAssetTracker(sharedData) {
+function setupAssetTracker() {
     console.log('Setting up Asset Tracker...');
     const assetForm = document.getElementById('asset-form');
     const assetAccountsContainer = document.getElementById('asset-accounts-container');
