@@ -147,9 +147,9 @@ function setupDebtTracker(sharedData) {
                     <div class="debt-account__metric">Yearly Interest: $${metrics.yearlyInterest}</div>
                     <div class="debt-account__metric">Payoff Date: ${metrics.payoffDate}</div>
                 </div>
-                <div class="debt-account__monthly-balances">
+                <div class="debt-account__monthly-balances account-history__monthly">
                     <h4>Monthly Balances</h4>
-                    <table class="debt-account__monthly-table">
+                    <table class="debt-account__monthly-table account-history__monthly-table">
                         <tr>
                             ${monthRange.map(m => `<th>${m}</th>`).join('')}
                         </tr>
@@ -167,11 +167,11 @@ function setupDebtTracker(sharedData) {
                     <button class="button primary-button save-debt-btn" type="submit">Save</button>
                     <button class="button secondary-button cancel-edit-btn" type="button">Cancel</button>
                 </form>
-                <div class="debt-account__history">
+                <div class="debt-account__history account-history">
                     <h4>Update History</h4>
-                    <ul class="debt-account__history-list">
+                    <ul class="debt-account__history-list account-history__list">
                         ${debt.history.map(entry => `
-                            <li class="debt-account__history-item">
+                            <li class="debt-account__history-item account-history__item">
                                 ${new Date(entry.date).toLocaleDateString()}: ${entry.event} - $${entry.principal.toFixed(2)}
                             </li>
                         `).join('')}
