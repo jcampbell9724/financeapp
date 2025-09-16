@@ -77,26 +77,23 @@ document.addEventListener('DOMContentLoaded', () => {
             document.head.appendChild(cssLink);
 
             // 3. Load and initialize JavaScript
-            const script = document.createElement('script');
-            script.id = `script-${app.id}`;
-            script.defer = true;
-            script.type = 'module';
+            const moduleUrl = new URL(`../${app.path}script.js`, import.meta.url);
+            const module = await import(moduleUrl);
 
-            // IMPORTANT: Set onload BEFORE src to prevent race conditions.
-            script.onload = () => {
-                if (app.setupFunction && typeof window[app.setupFunction] === 'function') {
-                    window[app.setupFunction]();
-                } else {
-                    console.error(`Setup function '${app.setupFunction}' not found on window object.`);
-                }
-            };
+            let setupFn = null;
+            if (app.setupFunction && typeof module[app.setupFunction] === 'function') {
+                setupFn = module[app.setupFunction];
+            } else if (typeof module.default === 'function') {
+                setupFn = module.default;
+            } else if (app.setupFunction && typeof window[app.setupFunction] === 'function') {
+                setupFn = window[app.setupFunction];
+            }
 
-            script.onerror = () => {
-                console.error(`Failed to load script: ${app.path}script.js`);
-            };
-
-            script.src = `${app.path}script.js`;
-            document.body.appendChild(script);
+            if (typeof setupFn === 'function') {
+                setupFn();
+            } else if (app.setupFunction) {
+                console.error(`Setup function '${app.setupFunction}' not found in module ${app.path}script.js.`);
+            }
 
             modalOverlay.style.display = 'flex';
         } catch (error) {
