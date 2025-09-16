@@ -1,4 +1,4 @@
-import { loadJSON, saveJSON } from '../../js/utils/storage.js';
+import { ensureAssetsHavePrincipal, loadJSON, saveJSON } from '../../js/utils/storage.js';
 
 // --- ASSET TRACKER LOGIC ---
 export function setupAssetTracker(sharedData) {
@@ -54,16 +54,18 @@ export function setupAssetTracker(sharedData) {
     // Function to load assets from localStorage
     function loadAssets() {
         const storedAssets = loadJSON('assets', []);
-        if (!Array.isArray(storedAssets)) {
-            console.warn('Expected assets data to be an array, resetting to empty list.', storedAssets);
-            return [];
+        const { assets: normalizedAssets, migrated } = ensureAssetsHavePrincipal(storedAssets);
+        if (migrated) {
+            saveJSON('assets', normalizedAssets);
         }
-        return storedAssets;
+        return normalizedAssets;
     }
 
     // Function to save assets to localStorage
     function saveAssets(assetsToSave) {
-        saveJSON('assets', assetsToSave);
+        const { assets: normalizedAssets } = ensureAssetsHavePrincipal(assetsToSave);
+        assets = normalizedAssets;
+        saveJSON('assets', normalizedAssets);
     }
 
     // Function to render the asset accounts
