@@ -53,7 +53,12 @@ function setupAssetTracker(sharedData) {
 
     // Function to load assets from localStorage
     function loadAssets() {
-        return loadJSON('assets', []);
+        const storedAssets = loadJSON('assets', []);
+        if (!Array.isArray(storedAssets)) {
+            console.warn('Expected assets data to be an array, resetting to empty list.', storedAssets);
+            return [];
+        }
+        return storedAssets;
     }
 
     // Function to save assets to localStorage
@@ -212,6 +217,7 @@ function setupAssetTracker(sharedData) {
     }
 
     // Initial render
+    assets = loadAssets();
     renderAssetAccounts();
 }
 
